@@ -1,0 +1,33 @@
+version: "2.1"
+
+services:
+  db:
+    container_name: unico-postgres
+    image: mdillon/postgis:10-alpine
+    mem_limit: 500m
+    networks:
+      - unico-stack
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: unico
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_USER: unico
+    healthcheck:
+      test: ["CMD", "pg_isready"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
+  wait:
+    container_name: wait-db
+    image: "waisbrot/wait"
+    restart: "no"
+    networks:
+      - unico-stack
+    environment:
+      TARGETS: "db:5432"
+      TIMEOUT: 60
+    depends_on:
+      - db
+
+networks: {unico-stack: {}}
