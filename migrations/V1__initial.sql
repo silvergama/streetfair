@@ -1,13 +1,16 @@
+CREATE EXTENSION unaccent;
+CREATE EXTENSION pg_trgm;
+
 -- Drop table
 
--- DROP TABLE public.free_fairs
+-- DROP TABLE public.free_fair
 
-CREATE TABLE free_fairs (
+CREATE TABLE free_fair (
     id integer PRIMARY KEY,
-    "long" character(12) NULL,
-    lat character(12) NULL,
-    setcens integer NULL,
-    areap integer NULL,
+    long numeric NULL,
+    lat numeric NULL,
+    setcens bigint NULL,
+    areap bigint NULL,
     coddist integer NULL,
     distrito varchar(55) NULL,
     codsubpref integer NULL,

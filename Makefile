@@ -1,3 +1,5 @@
+GOPACKAGES=$$(go list ./... )
+
 test/deps/up:
 	docker-compose up -d
 	@docker-compose run wait
@@ -15,6 +17,11 @@ test/deps/migrate:
 			-password="123456" \
 			-url="jdbc:postgresql://localhost:5432/unico" \
 			migrate
+
+test-local:
+	@make test/deps/down
+	@make test/deps/up
+	go test -failfast -count=1 -v $(GOPACKAGES)
 
 vendor:
 	go mod vendor
