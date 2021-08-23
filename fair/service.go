@@ -13,17 +13,17 @@ type UseCase interface {
 	Get(neighborhood string) (*Fair, error)
 }
 
-type fairPostgresService struct {
+type FairPostgresService struct {
 	db *sql.DB
 }
 
-func NewFairPostgresService() *fairPostgresService {
-	return &fairPostgresService{
+func NewFairPostgresService() *FairPostgresService {
+	return &FairPostgresService{
 		repository.GetInstance(),
 	}
 }
 
-func (fs *fairPostgresService) Save(f *Fair) (int, error) {
+func (fs *FairPostgresService) Save(f *Fair) (int, error) {
 	stmt, err := fs.db.Prepare(`
 	INSERT INTO free_fair (id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
 	`)
@@ -41,7 +41,7 @@ func (fs *fairPostgresService) Save(f *Fair) (int, error) {
 	return f.ID, nil
 }
 
-func (fs *fairPostgresService) Update(f *Fair) (int64, error) {
+func (fs *FairPostgresService) Update(f *Fair) (int64, error) {
 	stmt, err := fs.db.Prepare(`
 	UPDATE free_fair SET 
 		long = $2, 
@@ -76,7 +76,7 @@ func (fs *fairPostgresService) Update(f *Fair) (int64, error) {
 	return res.RowsAffected()
 }
 
-func (fs *fairPostgresService) Get(neighborhood string) ([]*Fair, error) {
+func (fs *FairPostgresService) Get(neighborhood string) ([]*Fair, error) {
 	stmt, err := fs.db.Prepare(`
 	SELECT 
 		id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia 
@@ -107,7 +107,7 @@ func (fs *fairPostgresService) Get(neighborhood string) ([]*Fair, error) {
 	return fairs, nil
 }
 
-func (fs *fairPostgresService) Remove(id int) error {
+func (fs *FairPostgresService) Remove(id int) error {
 	stmt, err := fs.db.Prepare("DELETE FROM free_fair WHERE id = $1")
 	if err != nil {
 		return err

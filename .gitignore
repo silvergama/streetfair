@@ -14,4 +14,7 @@
 ### VisualStudioCode ###
 .vscode
 vendor/
+
 unico
+
+logs.txt
