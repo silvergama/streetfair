@@ -16,7 +16,7 @@ var (
 
 type fairSuiteTest struct {
 	suite.Suite
-	service *fairPostgresService
+	service *FairPostgresService
 }
 
 func (s *fairSuiteTest) SetupSuite() {

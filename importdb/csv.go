@@ -8,6 +8,7 @@ import (
 	"strconv"
 
 	"github.com/silvergama/unico/fair"
+	"github.com/silvergama/unico/logger"
 	"github.com/silvergama/unico/repository"
 )
 
@@ -30,7 +31,7 @@ func NewImportCSV() *importCSV {
 func (is *importCSV) ImportFromCSV(path string) error {
 	csvFile, err := os.Open(path)
 	if err != nil {
-		fmt.Println(err)
+		logger.ErrorLogger.Println(err)
 	}
 	fmt.Println("Successfully Opened CSV file")
 	defer csvFile.Close()
@@ -38,19 +39,36 @@ func (is *importCSV) ImportFromCSV(path string) error {
 	csvr := csv.NewReader(csvFile)
 	csvr.FieldsPerRecord = -1
 	csvLines, err := csvr.ReadAll()
-
 	if err != nil {
-		fmt.Println(err)
+		logger.ErrorLogger.Println(err)
 	}
-	fairService := fair.NewFairPostgresService()
-	for i, line := range csvLines {
-		if i == 0 || len(line) < MinLenLine {
+
+	totalImported := importToDatabase(csvLines, fair.NewFairPostgresService())
+	fmt.Println("Import completed successfully!")
+	fmt.Printf("Total of %d imported lines", totalImported)
+	return nil
+}
+
+func importToDatabase(CSVLines [][]string, f *fair.FairPostgresService) int {
+	var count int
+	for i, line := range CSVLines {
+		if i == 0 {
+			continue
+		}
+		if len(line) < MinLenLine {
+			logger.WarningLogger.Printf("the line %d not contain the number of fields required", i)
 			continue
 		}
 		emp := newFair(line)
-		fairService.Save(emp)
+		id, err := f.Save(emp)
+		if err != nil {
+			logger.WarningLogger.Println(err)
+			continue
+		}
+		count++
+		logger.InfoLogger.Printf("imported line with id %d", id)
 	}
-	return nil
+	return count
 }
 
 func newFair(line []string) *fair.Fair {
