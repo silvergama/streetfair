@@ -16,7 +16,7 @@ var (
 
 type fairSuiteTest struct {
 	suite.Suite
-	service *FairPostgresService
+	service UseCase
 }
 
 func (s *fairSuiteTest) SetupSuite() {
@@ -24,7 +24,7 @@ func (s *fairSuiteTest) SetupSuite() {
 
 	err := repository.Setup()
 	require.NoError(s.T(), err)
-	s.service = NewFairPostgresService()
+	s.service = NewService(repository.GetInstance())
 	fair = &Fair{
 		ID:         1,
 		Long:       -46550164,

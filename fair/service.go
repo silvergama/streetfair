@@ -2,28 +2,26 @@ package fair
 
 import (
 	"database/sql"
-
-	"github.com/silvergama/unico/repository"
 )
 
 type UseCase interface {
-	Save(f *Fair) error
+	Save(f *Fair) (int, error)
 	Update(f *Fair) (int64, error)
 	Remove(id int) error
-	Get(neighborhood string) (*Fair, error)
+	Get(neighborhood string) ([]*Fair, error)
 }
 
-type FairPostgresService struct {
+type FairService struct {
 	db *sql.DB
 }
 
-func NewFairPostgresService() *FairPostgresService {
-	return &FairPostgresService{
-		repository.GetInstance(),
+func NewService(db *sql.DB) UseCase {
+	return &FairService{
+		db,
 	}
 }
 
-func (fs *FairPostgresService) Save(f *Fair) (int, error) {
+func (fs *FairService) Save(f *Fair) (int, error) {
 	stmt, err := fs.db.Prepare(`
 	INSERT INTO free_fair (id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
 	`)
@@ -41,7 +39,7 @@ func (fs *FairPostgresService) Save(f *Fair) (int, error) {
 	return f.ID, nil
 }
 
-func (fs *FairPostgresService) Update(f *Fair) (int64, error) {
+func (fs *FairService) Update(f *Fair) (int64, error) {
 	stmt, err := fs.db.Prepare(`
 	UPDATE free_fair SET 
 		long = $2, 
@@ -76,7 +74,7 @@ func (fs *FairPostgresService) Update(f *Fair) (int64, error) {
 	return res.RowsAffected()
 }
 
-func (fs *FairPostgresService) Get(neighborhood string) ([]*Fair, error) {
+func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 	stmt, err := fs.db.Prepare(`
 	SELECT 
 		id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia 
@@ -107,7 +105,7 @@ func (fs *FairPostgresService) Get(neighborhood string) ([]*Fair, error) {
 	return fairs, nil
 }
 
-func (fs *FairPostgresService) Remove(id int) error {
+func (fs *FairService) Remove(id int) error {
 	stmt, err := fs.db.Prepare("DELETE FROM free_fair WHERE id = $1")
 	if err != nil {
 		return err
