@@ -43,13 +43,13 @@ func (is *importCSV) ImportFromCSV(path string) error {
 		logger.ErrorLogger.Println(err)
 	}
 
-	totalImported := importToDatabase(csvLines, fair.NewFairPostgresService())
+	totalImported := importToDatabase(csvLines, fair.NewService(repository.GetInstance()))
 	fmt.Println("Import completed successfully!")
 	fmt.Printf("Total of %d imported lines", totalImported)
 	return nil
 }
 
-func importToDatabase(CSVLines [][]string, f *fair.FairPostgresService) int {
+func importToDatabase(CSVLines [][]string, f fair.UseCase) int {
 	var count int
 	for i, line := range CSVLines {
 		if i == 0 {
