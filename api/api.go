@@ -20,7 +20,7 @@ var (
 	methodNotAllowedErrMessage = "Invalid request method"
 )
 
-func Setup() {
+func Setup() error {
 	r := mux.NewRouter()
 
 	r.HandleFunc(RootHandlerPath, RootHandler)
@@ -34,6 +34,7 @@ func Setup() {
 		Handler: r,
 	}
 	log.Fatal(srv.ListenAndServe())
+	return nil
 }
 
 func RootHandler(w http.ResponseWriter, r *http.Request) {

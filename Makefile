@@ -23,7 +23,20 @@ test-local:
 	@make test/deps/up
 	go test -failfast -count=1 -v $(GOPACKAGES)
 
-vendor:
-	go mod vendor
+check/swagger:
+	which swagger || go get -u github.com/go-swagger/go-swagger/cmd/swagger
 
-install: vendor
+clean:
+	rm -rf vendor/
+
+install: clean
+	go mod vendor && go mod tidy
+
+run/api:
+	go run main.go api
+
+swagger:
+	swagger generate spec -o ./docs/swagger.json --scan-models
+
+swagger/api: swagger
+	swagger serve -F=swagger ./docs/swagger.json
