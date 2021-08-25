@@ -20,8 +20,9 @@ func init() {
 }
 
 func apiExecute(cmd *cobra.Command, args []string) error {
-	repository.Setup()
-	api.Setup()
+	if err := repository.Setup(); err != nil {
+		return err
+	}
 
-	return nil
+	return api.Setup()
 }

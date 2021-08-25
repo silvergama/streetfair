@@ -1,0 +1,281 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "The purpose of this application is to provide an application\nto manage street fairs in the city of São Paulo.",
+    "title": "API.",
+    "contact": {
+      "name": "Silver Gama",
+      "url": "https://github.com/silvergama",
+      "email": "silver.mdg@gmail.com"
+    },
+    "version": "1.0"
+  },
+  "host": "localhost:9000",
+  "basePath": "/v1",
+  "paths": {
+    "/v1/fair": {
+      "get": {
+        "tags": [
+          "v1"
+        ],
+        "summary": "Get street fairs by neighborhood.",
+        "operationId": "fairsGetV1Req",
+        "parameters": [
+          {
+            "type": "string",
+            "x-go-name": "Neighborhood",
+            "name": "neighborhood",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/success"
+          },
+          "500": {
+            "$ref": "#/responses/internalServerError"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "v1"
+        ],
+        "summary": "Add a new street fair.",
+        "operationId": "fairPostV1Req",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Fair"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/success"
+          },
+          "500": {
+            "$ref": "#/responses/internalServerError"
+          }
+        }
+      }
+    },
+    "/v1/fair/{id}": {
+      "put": {
+        "tags": [
+          "v1"
+        ],
+        "summary": "Update street fair.",
+        "operationId": "fairPutV1Req",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Fair"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/success"
+          },
+          "500": {
+            "$ref": "#/responses/internalServerError"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "v1"
+        ],
+        "summary": "Delete street fair by ID.",
+        "operationId": "fairDeleteV1Req",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "int64",
+            "x-go-name": "ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "$ref": "#/responses/noContent"
+          },
+          "500": {
+            "$ref": "#/responses/internalServerError"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Error": {
+      "type": "object",
+      "properties": {
+        "message": {
+          "type": "string",
+          "x-go-name": "Message"
+        },
+        "status_code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "StatusCode"
+        }
+      },
+      "x-go-package": "github.com/silvergama/unico/api/common"
+    },
+    "Fair": {
+      "type": "object",
+      "properties": {
+        "areap": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Areap"
+        },
+        "bairro": {
+          "type": "string",
+          "x-go-name": "Bairro"
+        },
+        "coddist": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Coddist"
+        },
+        "codsubpref": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Codsubpref"
+        },
+        "distrito": {
+          "type": "string",
+          "x-go-name": "Distrito"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        },
+        "lat": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Lat"
+        },
+        "logradouro": {
+          "type": "string",
+          "x-go-name": "Logradouro"
+        },
+        "long": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Long"
+        },
+        "nome_feira": {
+          "type": "string",
+          "x-go-name": "NomeFeira"
+        },
+        "numero": {
+          "type": "string",
+          "x-go-name": "Numero"
+        },
+        "referencia": {
+          "type": "string",
+          "x-go-name": "Referencia"
+        },
+        "regiao_5": {
+          "type": "string",
+          "x-go-name": "Regiao5"
+        },
+        "regiao_8": {
+          "type": "string",
+          "x-go-name": "Regiao8"
+        },
+        "registro": {
+          "type": "string",
+          "x-go-name": "Registro"
+        },
+        "setcens": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Setcens"
+        },
+        "subprefe": {
+          "type": "string",
+          "x-go-name": "Subprefe"
+        }
+      },
+      "x-go-package": "github.com/silvergama/unico/fair"
+    },
+    "Success": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "ID"
+        }
+      },
+      "x-go-package": "github.com/silvergama/unico/api/common"
+    }
+  },
+  "responses": {
+    "badRequest": {
+      "description": "Bad Request",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      },
+      "headers": {
+        "Body": {}
+      }
+    },
+    "internalServerError": {
+      "description": "Internal Server Error",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      }
+    },
+    "noContent": {
+      "description": "No Content",
+      "schema": {
+        "$ref": "#/definitions/Success"
+      }
+    },
+    "notFound": {
+      "description": "Not Found",
+      "schema": {
+        "$ref": "#/definitions/Error"
+      },
+      "headers": {
+        "Body": {}
+      }
+    },
+    "success": {
+      "description": "Success",
+      "schema": {
+        "$ref": "#/definitions/Success"
+      }
+    }
+  }
+}
