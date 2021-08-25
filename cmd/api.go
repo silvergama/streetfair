@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"github.com/silvergama/unico/api"
+	"github.com/silvergama/unico/repository"
 	"github.com/spf13/cobra"
 )
 
@@ -19,6 +20,7 @@ func init() {
 }
 
 func apiExecute(cmd *cobra.Command, args []string) error {
+	repository.Setup()
 	api.Setup()
 
 	return nil
