@@ -15,12 +15,12 @@ CREATE TABLE free_fair (
     distrito varchar(55) NULL,
     codsubpref integer NULL,
     subprefe varchar(150),
-    regiao5 character(15),
-    regiao8 character(15),
+    regiao5 varchar(12),
+    regiao8 varchar(12),
     nome_feira varchar(175) NULL,
     registro varchar(8),
     logradouro varchar(175) NULL,
-    numero character(20) NULL,
+    numero varchar(8) NULL,
     bairro varchar(72) NULL,
     referencia varchar(150)
 );

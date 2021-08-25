@@ -7,13 +7,15 @@ import (
 
 	"github.com/gorilla/mux"
 	v1 "github.com/silvergama/unico/api/v1"
+	"github.com/silvergama/unico/fair"
+	"github.com/silvergama/unico/repository"
 )
 
 var (
 	RootHandlerPath        = "/"
 	HealthCheckHandlerPath = "/healthcheck"
 
-	FairHandlerPath = "/fair"
+	FairHandlerPath = "/v1/fair"
 
 	methodNotAllowedErrMessage = "Invalid request method"
 )
@@ -23,7 +25,9 @@ func Setup() {
 
 	r.HandleFunc(RootHandlerPath, RootHandler)
 	r.HandleFunc(HealthCheckHandlerPath, HealthCheckHandler)
-	r.HandleFunc(FairHandlerPath, v1.FairHandler)
+
+	fairRepo := fair.NewService(repository.GetInstance())
+	v1.MakeFairHandler(r, fairRepo)
 
 	srv := &http.Server{
 		Addr:    ":9000",
