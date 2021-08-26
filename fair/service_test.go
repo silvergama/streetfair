@@ -4,7 +4,7 @@ import (
 	"log"
 	"testing"
 
-	"github.com/silvergama/unico/repository"
+	"github.com/silvergama/streetfair/repository"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"

@@ -5,10 +5,10 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
-	v1 "github.com/silvergama/unico/api/v1"
-	"github.com/silvergama/unico/app"
-	"github.com/silvergama/unico/fair"
-	"github.com/silvergama/unico/repository"
+	v1 "github.com/silvergama/streetfair/api/v1"
+	"github.com/silvergama/streetfair/app"
+	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/repository"
 	"github.com/sirupsen/logrus"
 )
 

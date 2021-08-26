@@ -1,4 +1,4 @@
-module github.com/silvergama/unico
+module github.com/silvergama/streetfair
 
 go 1.16
 

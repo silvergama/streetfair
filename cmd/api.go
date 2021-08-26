@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"github.com/silvergama/unico/api"
-	"github.com/silvergama/unico/repository"
+	"github.com/silvergama/streetfair/api"
+	"github.com/silvergama/streetfair/repository"
 	"github.com/spf13/cobra"
 )
 

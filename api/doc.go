@@ -19,8 +19,8 @@
 package api
 
 import (
-	"github.com/silvergama/unico/common/response"
-	"github.com/silvergama/unico/fair"
+	"github.com/silvergama/streetfair/common/response"
+	"github.com/silvergama/streetfair/fair"
 )
 
 // Not Found

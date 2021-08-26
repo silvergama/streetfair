@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/silvergama/unico/cmd"
+	"github.com/silvergama/streetfair/cmd"
 )
 
 func main() {
