@@ -1,23 +1,28 @@
 package logger
 
 import (
-	"log"
-	"os"
+	"path/filepath"
+	"time"
+
+	log "github.com/sirupsen/logrus"
+	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-var (
-	WarningLogger *log.Logger
-	InfoLogger    *log.Logger
-	ErrorLogger   *log.Logger
-)
+func SetupLogger() {
 
-func init() {
-	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
-	if err != nil {
-		log.Fatal(err)
+	lumberjackLogger := &lumberjack.Logger{
+		Filename:   filepath.ToSlash("fair.log"),
+		MaxSize:    5, // MB
+		MaxBackups: 10,
+		MaxAge:     30, // days
+		Compress:   true,
 	}
 
-	InfoLogger = log.New(file, "INFO: ", log.Ldate|log.Ltime|log.Lshortfile)
-	WarningLogger = log.New(file, "WARNING: ", log.Ldate|log.Ltime|log.Lshortfile)
-	ErrorLogger = log.New(file, "ERROR: ", log.Ldate|log.Ltime|log.Lshortfile)
+	logFormatter := new(log.TextFormatter)
+	logFormatter.TimestampFormat = time.RFC1123Z
+	logFormatter.FullTimestamp = true
+
+	log.SetFormatter(logFormatter)
+	log.SetLevel(log.InfoLevel)
+	log.SetOutput(lumberjackLogger)
 }

@@ -8,8 +8,8 @@ import (
 	"strconv"
 
 	"github.com/silvergama/unico/fair"
-	"github.com/silvergama/unico/logger"
 	"github.com/silvergama/unico/repository"
+	"github.com/sirupsen/logrus"
 )
 
 const MinLenLine = 17
@@ -31,7 +31,7 @@ func NewImportCSV() *importCSV {
 func (is *importCSV) ImportFromCSV(path string) error {
 	csvFile, err := os.Open(path)
 	if err != nil {
-		logger.ErrorLogger.Println(err)
+		logrus.Errorln(err)
 	}
 	fmt.Println("Successfully Opened CSV file")
 	defer csvFile.Close()
@@ -40,12 +40,13 @@ func (is *importCSV) ImportFromCSV(path string) error {
 	csvr.FieldsPerRecord = -1
 	csvLines, err := csvr.ReadAll()
 	if err != nil {
-		logger.ErrorLogger.Println(err)
+		logrus.WithError(err)
 	}
 
 	totalImported := importToDatabase(csvLines, fair.NewService(repository.GetInstance()))
 	fmt.Println("Import completed successfully!")
 	fmt.Printf("Total of %d imported lines", totalImported)
+	logrus.Infof("Total of %d imported lines", totalImported)
 	return nil
 }
 
@@ -56,17 +57,17 @@ func importToDatabase(CSVLines [][]string, f fair.UseCase) int {
 			continue
 		}
 		if len(line) < MinLenLine {
-			logger.WarningLogger.Printf("the line %d not contain the number of fields required", i)
+			logrus.Infof("the line %d not contain the number of fields required", i)
 			continue
 		}
 		emp := newFair(line)
 		id, err := f.Save(emp)
 		if err != nil {
-			logger.WarningLogger.Println(err)
+			logrus.Warnf("error: %s with ID: %d", err, id)
 			continue
 		}
 		count++
-		logger.InfoLogger.Printf("imported line with id %d", id)
+		logrus.Infof("imported line with ID: %d", id)
 	}
 	return count
 }
