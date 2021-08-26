@@ -6,8 +6,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/silvergama/unico/common/response"
-	"github.com/silvergama/unico/fair"
+	"github.com/silvergama/streetfair/common/response"
+	"github.com/silvergama/streetfair/fair"
 )
 
 func MakeFairHandler(r *mux.Router, service fair.UseCase) {

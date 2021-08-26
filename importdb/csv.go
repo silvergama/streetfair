@@ -7,8 +7,8 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/silvergama/unico/fair"
-	"github.com/silvergama/unico/repository"
+	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/repository"
 	"github.com/sirupsen/logrus"
 )
 

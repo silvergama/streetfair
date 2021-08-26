@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/silvergama/unico/fair"
+	"github.com/silvergama/streetfair/fair"
 	"github.com/sirupsen/logrus"
 )
 

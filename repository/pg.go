@@ -4,7 +4,7 @@ import (
 	"database/sql"
 
 	_ "github.com/lib/pq"
-	"github.com/silvergama/unico/app"
+	"github.com/silvergama/streetfair/app"
 	"github.com/sirupsen/logrus"
 )
 
