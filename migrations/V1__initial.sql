@@ -18,9 +18,9 @@ CREATE TABLE free_fair (
     regiao5 varchar(12),
     regiao8 varchar(12),
     nome_feira varchar(175) NULL,
-    registro varchar(8),
+    registro varchar(10),
     logradouro varchar(175) NULL,
-    numero varchar(8) NULL,
+    numero varchar(12) NULL,
     bairro varchar(72) NULL,
     referencia varchar(150)
 );
