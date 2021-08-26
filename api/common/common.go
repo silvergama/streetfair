@@ -2,10 +2,9 @@ package common
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
-	"github.com/silvergama/unico/logger"
+	"github.com/sirupsen/logrus"
 )
 
 func errorBody(message string, statusCode int) interface{} {
@@ -40,7 +39,7 @@ func writeJSONResponse(w http.ResponseWriter, statusCode int, body interface{}) 
 func responseBodyToJSON(body interface{}) ([]byte, error) {
 	responseJSON, err := json.Marshal(body)
 	if err != nil {
-		logger.WarningLogger.Println(fmt.Sprintf("error marshaling response json, err: %v", err))
+		logrus.Warnf("error marshaling response json, err: %v", err)
 		return nil, err
 	}
 

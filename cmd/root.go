@@ -1,9 +1,10 @@
 package cmd
 
 import (
-	"log"
 	"os"
 
+	"github.com/silvergama/unico/logger"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )
 
@@ -14,8 +15,9 @@ var RootCmd = &cobra.Command{
 }
 
 func Execute() {
+	logger.SetupLogger()
 	if err := RootCmd.Execute(); err != nil {
-		log.Panic(err.Error())
+		logrus.Panicln(err)
 		os.Exit(-1)
 	}
 }
