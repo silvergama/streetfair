@@ -1,5 +1,9 @@
 GOPACKAGES=$$(go list ./... )
 
+ifdef file
+FILE=$(file)
+endif
+
 test/deps/up:
 	docker-compose up -d
 	@docker-compose run wait
@@ -35,8 +39,28 @@ install: clean
 run/api:
 	go run main.go api
 
+run/import:
+	go run main.go import $(FILE)
+
 swagger:
 	swagger generate spec -o ./docs/swagger.json --scan-models
 
 swagger/api: swagger
 	swagger serve -F=swagger ./docs/swagger.json
+
+clean-coverage:
+	mkdir -p .cover
+	rm -rf .cover/*
+
+coverage: clean-coverage
+	go test -tags="all" -covermode="count" -coverprofile=".cover/cover.out" $(GOPACKAGES)
+
+coverage-html: coverage
+	go tool cover -html=.cover/cover.out
+
+docker/coverage:
+	-docker rm -f coverage
+	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/unico:test -c "make coverage"
+
+docker/build:
+	docker build -t silvergama/unico:test .

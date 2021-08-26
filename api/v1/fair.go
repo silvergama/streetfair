@@ -7,6 +7,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/silvergama/unico/fair"
+	"github.com/sirupsen/logrus"
 )
 
 func MakeFairHandler(r *mux.Router, service fair.UseCase) {
@@ -72,6 +73,7 @@ func addFair(service fair.UseCase) http.Handler {
 
 		body := fair.Fair{}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			logrus.Warn(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("internal server error"))
 			return
@@ -92,6 +94,7 @@ func updateFair(service fair.UseCase) http.Handler {
 
 		ID, err := strconv.Atoi(mux.Vars(r)["id"])
 		if err != nil {
+			logrus.Warn(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return
@@ -99,6 +102,7 @@ func updateFair(service fair.UseCase) http.Handler {
 
 		body := fair.Fair{ID: ID}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
+			logrus.Warn(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("internal server error"))
 			return
@@ -121,6 +125,7 @@ func deleteFair(service fair.UseCase) http.Handler {
 
 		ID, err := strconv.Atoi(mux.Vars(r)["id"])
 		if err != nil {
+			logrus.Warn(err)
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 			return

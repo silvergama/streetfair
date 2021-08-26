@@ -2,13 +2,14 @@ package api
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gorilla/mux"
 	v1 "github.com/silvergama/unico/api/v1"
+	"github.com/silvergama/unico/app"
 	"github.com/silvergama/unico/fair"
 	"github.com/silvergama/unico/repository"
+	"github.com/sirupsen/logrus"
 )
 
 var (
@@ -21,6 +22,7 @@ var (
 )
 
 func Setup() error {
+	port := app.Config.Get("apiPort")
 	r := mux.NewRouter()
 
 	r.HandleFunc(RootHandlerPath, RootHandler)
@@ -30,10 +32,11 @@ func Setup() error {
 	v1.MakeFairHandler(r, fairRepo)
 
 	srv := &http.Server{
-		Addr:    ":9000",
+		Addr:    ":" + port,
 		Handler: r,
 	}
-	log.Fatal(srv.ListenAndServe())
+	logrus.Infof("listening on %s", port)
+	logrus.Fatal(srv.ListenAndServe())
 	return nil
 }
 

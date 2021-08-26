@@ -2,9 +2,10 @@ package repository
 
 import (
 	"database/sql"
-	"fmt"
 
 	_ "github.com/lib/pq"
+	"github.com/silvergama/unico/app"
+	"github.com/sirupsen/logrus"
 )
 
 var dbInstance *sql.DB
@@ -24,13 +25,9 @@ func Setup() error {
 }
 
 func setupDBInstance() (*sql.DB, error) {
-	db, err := sql.Open("postgres", fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
-		"unico",
-		"123456",
-		"localhost",
-		"5432",
-		"unico"))
+	db, err := sql.Open("postgres", app.Config.Get("dbUrl"))
 	if err != nil {
+		logrus.Errorf("error when traying to connect database: %v", err)
 		return nil, err
 	}
 
