@@ -145,7 +145,7 @@
           "x-go-name": "StatusCode"
         }
       },
-      "x-go-package": "github.com/silvergama/unico/api/common"
+      "x-go-package": "github.com/silvergama/unico/common/response"
     },
     "Fair": {
       "type": "object",
@@ -237,7 +237,7 @@
           "x-go-name": "ID"
         }
       },
-      "x-go-package": "github.com/silvergama/unico/api/common"
+      "x-go-package": "github.com/silvergama/unico/common/response"
     }
   },
   "responses": {

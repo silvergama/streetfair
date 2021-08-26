@@ -19,41 +19,41 @@
 package api
 
 import (
-	"github.com/silvergama/unico/api/common"
+	"github.com/silvergama/unico/common/response"
 	"github.com/silvergama/unico/fair"
 )
 
 // Not Found
 // swagger:response notFound
 type docNotFoundResponse struct {
-	Body common.Error
+	Body response.Error
 }
 
 // Bad Request
 // swagger:response badRequest
 type docBadRequestResponse struct {
-	Body common.Error
+	Body response.Error
 }
 
 // Internal Server Error
 // swagger:response internalServerError
 type docInternalServerErrorResponse struct {
 	// in: body
-	Body *common.Error
+	Body *response.Error
 }
 
 // No Content
 // swagger:response noContent
 type docNoContentResponse struct {
 	// in: body
-	Body *common.Success
+	Body *response.Success
 }
 
 // Success
 // swagger:response success
 type docSuccessResponse struct {
 	// in: body
-	Body *common.Success
+	Body *response.Success
 }
 
 // swagger:parameters fairsGetV1Req
