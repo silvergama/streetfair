@@ -10,8 +10,8 @@ import (
 
 var RootCmd = &cobra.Command{
 	Use:   "streetfair",
-	Short: "streetfair - Evaluation process",
-	Long:  "streetfair - Evaluation process",
+	Short: "streetfair - Centralizador de feiras de rua.",
+	Long:  "streetfair - Centralizador de informações sobre feiras de rua na cidade de São Paulo.",
 }
 
 func Execute() {

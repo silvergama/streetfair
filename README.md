@@ -4,6 +4,21 @@
 
 The objective of this project is to centralize information about street fairs in the city of São Paulo.
 
+
+
+## Running
+
+This app is written in Golang. If you don't have experience with it: https://golang.org/doc/install.
+It depends on a Golang version with module support (at least 1.11, latest version is recommended).
+Should you interoperate with Golang versions >= 1.11, don't forget to proper set your _GO111MODULE_ environment variable (https://dev.to/maelvls/why-is-go111module-everywhere-and-everything-about-go-modules-24k)
+
+### Install deps
+
+- Install `docker` and `docker-compose`
+
+*Attention*: you should first set `$GOBIN` environment variable, add it to the `$PATH`, and then run the commands bellow:
+
+
 # How to Run
 
 * **Install dependencies**
@@ -15,19 +30,19 @@ $ make clean install
 * **To running local dependencies** if you want to run the application using local dependencies with docker, run the command below before running the API
 
 ``` bash
-$ make test/deps/up
+$ make deps/up
 ```
 
 * **To run import CSV**
 
 ``` bash
-$ make import file=path-to-file.csv
+$ make run/import file=path-to-file.csv
 ```
 
 * **To stop**
 
 ``` bash
-$ make test/deps/down
+$ make deps/down
 ```
 
 * **To run API**
@@ -58,6 +73,16 @@ Just run:
 ``` bash
 $ make test
 ```
+
+# Log
+All logs are stored in the fair.log file.
+To show logs:
+
+``` bash
+$ make show/logs
+```
+
+Then commit the contents of `docs/swagger` dir.
 
 # Swagger
 

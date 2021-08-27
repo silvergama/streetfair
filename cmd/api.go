@@ -9,8 +9,8 @@ import (
 var (
 	apiCommand = &cobra.Command{
 		Use:   "api",
-		Short: "api",
-		Long:  "api",
+		Short: "Initialize the API",
+		Long:  "Initialize the API",
 		RunE:  apiExecute,
 	}
 )

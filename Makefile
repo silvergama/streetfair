@@ -5,12 +5,12 @@ FILE=$(file)
 endif
 
 # =========== Dependencies =============
-test/deps/up:
+deps/up:
 	docker-compose up -d
 	@docker-compose run wait
-	@make test/deps/migrate
+	@make deps/migrate
 
-test/deps/migrate:
+deps/migrate:
 	docker run --rm --network=host -v "$(PWD)/migrations:/flyway/sql:ro"  \
 			boxfuse/flyway:5.2.4-alpine \
 			-driver="org.postgresql.Driver" \
@@ -20,12 +20,16 @@ test/deps/migrate:
 			-url="jdbc:postgresql://localhost:5432/street_fair" \
 			migrate
 
-test/deps/down:
+deps/down:
 	docker-compose down
 
 # =========== Test =============
 test:
 	go test -failfast -count=1 -v $(GOPACKAGES)
+
+# =========== Log =============
+show/logs:
+	tail -f fair.log
 
 # =========== Swagger =============
 check/swagger:
@@ -58,6 +62,11 @@ docker/image:
 
 docker/test:
 	docker run --rm --net=host --entrypoint /bin/sh silvergama/street_fair:test -c "make test"
+
+docker/coverage:
+	-docker rm -f coverage
+	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/street_fair:test -c "make coverage"
+
 
 # =========== App =============
 clean:
