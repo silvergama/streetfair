@@ -14,10 +14,10 @@ deps/migrate:
 	docker run --rm --network=host -v "$(PWD)/migrations:/flyway/sql:ro"  \
 			boxfuse/flyway:5.2.4-alpine \
 			-driver="org.postgresql.Driver" \
-			-user="street_fair" \
-			-schemas="street_fair" \
+			-user="streetfair" \
+			-schemas="streetfair" \
 			-password="123456" \
-			-url="jdbc:postgresql://localhost:5432/street_fair" \
+			-url="jdbc:postgresql://localhost:5432/streetfair" \
 			migrate
 
 deps/down:
@@ -55,17 +55,17 @@ coverage-html: coverage
 
 # =========== Docker =============
 docker/build:
-	docker build -t silvergama/street_fair:test -f Dockerfile.build .
+	docker build -t silvergama/streetfair:test -f Dockerfile.build .
 
 docker/image:
-	docker build -t silvergama/street_fair .
+	docker build -t silvergama/streetfair .
 
 docker/test:
-	docker run --rm --net=host --entrypoint /bin/sh silvergama/street_fair:test -c "make test"
+	docker run --rm --net=host --entrypoint /bin/sh silvergama/streetfair:test -c "make test"
 
 docker/coverage:
 	-docker rm -f coverage
-	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/street_fair:test -c "make coverage"
+	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/streetfair:test -c "make coverage"
 
 
 # =========== App =============
