@@ -36,7 +36,7 @@ $ make deps/up
 * **To run import CSV**
 
 ``` bash
-$ make run/import file=path-to-file.csv
+$ make run/import file=docs/example.csv
 ```
 
 * **To stop**
