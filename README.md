@@ -76,7 +76,8 @@ $ make test
 
 # Log
 All logs are stored in the fair.log file.
-To show logs:
+
+* **To show logs:**
 
 ``` bash
 $ make show/logs
