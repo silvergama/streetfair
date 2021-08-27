@@ -10,7 +10,7 @@ var (
 	importCommand = &cobra.Command{
 		Use:   "import",
 		Short: "Import data to database",
-		Long:  "Import data to database from file",
+		Long:  "Import data to database from CSV file",
 		Args:  cobra.ExactArgs(1),
 		RunE:  importExecute,
 	}
