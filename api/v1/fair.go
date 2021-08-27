@@ -44,7 +44,6 @@ func MakeFairHandler(r *mux.Router, service fair.UseCase) {
 
 func getFair(service fair.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
 
 		neighborhood := r.URL.Query().Get("neighborhood")
 		fairs, err := service.Get(neighborhood)
@@ -111,8 +110,6 @@ func updateFair(service fair.UseCase) http.Handler {
 
 func deleteFair(service fair.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		defer r.Body.Close()
-
 		ID, err := strconv.Atoi(mux.Vars(r)["id"])
 		if err != nil {
 			response.WriteUnprocessableEntity(w, err.Error())
