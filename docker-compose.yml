@@ -2,17 +2,17 @@ version: "2.1"
 
 services:
   db:
-    container_name: street_fair_postgres_test
+    container_name: streetfair_postgres_test
     image: mdillon/postgis:10-alpine
     mem_limit: 500m
     networks:
-      - street_fair_stack
+      - streetfair_stack
     ports:
       - 5432:5432
     environment:
-      POSTGRES_DB: street_fair
+      POSTGRES_DB: streetfair
       POSTGRES_PASSWORD: 123456
-      POSTGRES_USER: street_fair
+      POSTGRES_USER: streetfair
     healthcheck:
       test: ["CMD", "pg_isready"]
       interval: 1s
@@ -24,11 +24,11 @@ services:
     image: "waisbrot/wait"
     restart: "no"
     networks:
-      - street_fair_stack
+      - streetfair_stack
     environment:
       TARGETS: "db:5432"
       TIMEOUT: 60
     depends_on:
       - db
 
-networks: {street_fair_stack: {}}
+networks: {streetfair_stack: {}}
