@@ -3,6 +3,7 @@ module github.com/silvergama/streetfair
 go 1.16
 
 require (
+	github.com/DATA-DOG/go-sqlmock v1.5.0
 	github.com/gorilla/mux v1.8.0
 	github.com/kr/text v0.2.0 // indirect
 	github.com/lib/pq v1.10.2

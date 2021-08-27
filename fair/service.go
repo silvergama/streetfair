@@ -25,7 +25,7 @@ func NewService(db *sql.DB) UseCase {
 
 func (fs *FairService) Save(f *Fair) (int, error) {
 	stmt, err := fs.db.Prepare(`
-	INSERT INTO free_fair (id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+	INSERT INTO streetfair (id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
 	`)
 	if err != nil {
 		logrus.Errorf("error preparing to insert street fair query: %v", err)
@@ -45,7 +45,7 @@ func (fs *FairService) Save(f *Fair) (int, error) {
 
 func (fs *FairService) Update(f *Fair) (int64, error) {
 	stmt, err := fs.db.Prepare(`
-	UPDATE free_fair SET 
+	UPDATE streetfair SET 
 		long = $2, 
 		lat = $3, 
 		setcens = $4, 
@@ -84,7 +84,7 @@ func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 	stmt, err := fs.db.Prepare(`
 	SELECT 
 		id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia 
-	FROM free_fair WHERE bairro = $1 or bairro ilike '%$1%' OR similarity(bairro, upper(unaccent($1))) > 0.4`)
+	FROM streetfair WHERE bairro = $1 or bairro ilike '%$1%' OR similarity(bairro, upper(unaccent($1))) > 0.4`)
 	if err != nil {
 		logrus.Errorf("error preparing to get street fair query: %v", err)
 		return nil, err
@@ -115,7 +115,7 @@ func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 }
 
 func (fs *FairService) Remove(id int) error {
-	stmt, err := fs.db.Prepare("DELETE FROM free_fair WHERE id = $1")
+	stmt, err := fs.db.Prepare("DELETE FROM streetfair WHERE id = $1")
 	if err != nil {
 		logrus.Errorf("error preparing to delete street fair query: %v", err)
 		return err

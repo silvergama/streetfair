@@ -24,21 +24,20 @@ test/deps/down:
 	docker-compose down
 
 # =========== Test =============
-test-local:
-	@make test/deps/down
-	@make test/deps/up
+test:
 	go test -failfast -count=1 -v $(GOPACKAGES)
 
 # =========== Swagger =============
-swagger:
+check/swagger:
+	which swagger || go get -u github.com/go-swagger/go-swagger/cmd/swagger
+
+swagger: check/swagger
 	swagger generate spec -o ./docs/swagger.json --scan-models
 
 swagger/api: swagger
 	swagger serve -F=swagger ./docs/swagger.json
 
 # =========== Coverage =============
-check/swagger:
-	which swagger || go get -u github.com/go-swagger/go-swagger/cmd/swagger
 
 clean-coverage:
 	mkdir -p .cover
@@ -50,16 +49,15 @@ coverage: clean-coverage
 coverage-html: coverage
 	go tool cover -html=.cover/cover.out
 
-docker/coverage:
-	-docker rm -f coverage
-	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/street_fair:test -c "make coverage"
-
 # =========== Docker =============
 docker/build:
 	docker build -t silvergama/street_fair:test -f Dockerfile.build .
 
 docker/image:
 	docker build -t silvergama/street_fair .
+
+docker/test:
+	docker run --rm --net=host --entrypoint /bin/sh silvergama/street_fair:test -c "make test"
 
 # =========== App =============
 clean:

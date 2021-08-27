@@ -3,9 +3,9 @@ CREATE EXTENSION pg_trgm;
 
 -- Drop table
 
--- DROP TABLE public.free_fair
+-- DROP TABLE public.streetfair
 
-CREATE TABLE free_fair (
+CREATE TABLE streetfair (
     id integer PRIMARY KEY,
     long numeric NULL,
     lat numeric NULL,

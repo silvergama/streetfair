@@ -41,6 +41,9 @@
           "200": {
             "$ref": "#/responses/success"
           },
+          "404": {
+            "$ref": "#/responses/notFound"
+          },
           "500": {
             "$ref": "#/responses/internalServerError"
           }
