@@ -47,7 +47,7 @@ func getFair(service fair.UseCase) http.Handler {
 
 		neighborhood := r.URL.Query().Get("neighborhood")
 		fairs, err := service.Get(neighborhood)
-		if err != nil || fairs == nil {
+		if err != nil || len(fairs) == 0 {
 			response.WriteNotFound(w, "error finding street fair by neighborhood")
 			return
 		}

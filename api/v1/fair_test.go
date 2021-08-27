@@ -39,6 +39,9 @@ func (fs serviceMock) Remove(id int) error {
 	return removeFairService(id)
 }
 
+/**
+* Test coverage AddFair
+**/
 func TestAddFair(t *testing.T) {
 	saveFairService = func(f *fair.Fair) (int, error) {
 		return f.ID, nil
@@ -47,7 +50,6 @@ func TestAddFair(t *testing.T) {
 
 	r := mux.NewRouter()
 	r.Handle("/v1/fair", fakeHandler)
-
 	payload := `{
 		"id": 10
 	}`
@@ -66,6 +68,42 @@ func TestAddFair(t *testing.T) {
 	assert.EqualValues(t, 10, success.ID)
 }
 
+func TestAddFairUnprocessableEntity(t *testing.T) {
+	errMessage := errors.New("json: cannot unmarshal string into Go struct field Fair.id of type int")
+	saveFairService = func(f *fair.Fair) (int, error) {
+		return f.ID, errMessage
+	}
+	fakeHandler := addFair(serviceMock{})
+
+	r := mux.NewRouter()
+	r.Handle("/v1/fair", fakeHandler)
+
+	payload := `{
+		"id": "10"
+	}`
+
+	req, err := http.NewRequest("PUT", "/v1/fair", bytes.NewBufferString(payload))
+	assert.Nil(t, err)
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	var errResponse response.Error
+	err = json.Unmarshal(rr.Body.Bytes(), &errResponse)
+	assert.Nil(t, err)
+
+	expected := response.Error{
+		StatusCode: http.StatusUnprocessableEntity,
+		Message:    errMessage.Error(),
+	}
+	assert.NotNil(t, errResponse)
+	assert.Equal(t, http.StatusUnprocessableEntity, rr.Code)
+	assert.Equal(t, expected, errResponse)
+}
+
+/**
+* Test coverage UpdateFair
+**/
 func TestUpdateFairSuccess(t *testing.T) {
 	updateFairService = func(f *fair.Fair) (int64, error) {
 		return int64(f.ID), nil
@@ -87,14 +125,15 @@ func TestUpdateFairSuccess(t *testing.T) {
 
 	var success response.Success
 	err = json.Unmarshal(rr.Body.Bytes(), &success)
+
 	assert.Nil(t, err)
 	assert.NotNil(t, success)
-	assert.EqualValues(t, http.StatusOK, rr.Code)
-	assert.EqualValues(t, 10, success.ID)
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, response.Success{ID: 10}, success)
 }
 
 func TestUpdateFairServerError(t *testing.T) {
-	errMessage := errors.New("error updating street fair")
+	errMessage := errors.New("json: cannot unmarshal string into Go struct field Fair.id of type int")
 	updateFairService = func(f *fair.Fair) (int64, error) {
 		return 0, errMessage
 	}
@@ -103,7 +142,12 @@ func TestUpdateFairServerError(t *testing.T) {
 	r := mux.NewRouter()
 	r.Handle("/v1/fair/{id}", fakeHandler)
 
-	req, err := http.NewRequest("PUT", "/v1/fair/10", bytes.NewBufferString(`{"ID": 10, "Error": "ServerError"}`))
+	payload := `{
+		"id": "10",
+		"Lat": "798798798"
+	}`
+
+	req, err := http.NewRequest("PUT", "/v1/fair/10", bytes.NewBufferString(payload))
 	assert.Nil(t, err)
 
 	rr := httptest.NewRecorder()
@@ -112,12 +156,104 @@ func TestUpdateFairServerError(t *testing.T) {
 	var errResponse response.Error
 	err = json.Unmarshal(rr.Body.Bytes(), &errResponse)
 	assert.Nil(t, err)
+
+	expected := response.Error{
+		StatusCode: http.StatusInternalServerError,
+		Message:    errMessage.Error(),
+	}
 	assert.NotNil(t, errResponse)
 	assert.Equal(t, http.StatusInternalServerError, rr.Code)
-	assert.Equal(t, http.StatusInternalServerError, errResponse.StatusCode)
-	assert.Equal(t, errMessage.Error(), errResponse.Message)
+	assert.Equal(t, expected, errResponse)
 }
 
+func TestUpdateFairUnprocessableEntity(t *testing.T) {
+	errMessage := errors.New("strconv.Atoi: parsing \"penha\": invalid syntax")
+	updateFairService = func(f *fair.Fair) (int64, error) {
+		return 0, errMessage
+	}
+	fakeHandler := updateFair(serviceMock{})
+
+	r := mux.NewRouter()
+	r.Handle("/v1/fair/{id}", fakeHandler)
+
+	req, err := http.NewRequest("PUT", "/v1/fair/penha", bytes.NewBufferString(`{"ID": 10}`))
+	assert.Nil(t, err)
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	var errResponse response.Error
+	err = json.Unmarshal(rr.Body.Bytes(), &errResponse)
+	assert.Nil(t, err)
+
+	expected := response.Error{
+		StatusCode: http.StatusUnprocessableEntity,
+		Message:    errMessage.Error(),
+	}
+	assert.NotNil(t, errResponse)
+	assert.Equal(t, http.StatusUnprocessableEntity, rr.Code)
+	assert.Equal(t, expected, errResponse)
+}
+
+/**
+* Test coverage GetFair
+**/
+func TestGetFair(t *testing.T) {
+	fairsResponse := []*fair.Fair{{ID: 1}}
+	getFairService = func(neighborhood string) ([]*fair.Fair, error) {
+		return fairsResponse, nil
+	}
+	fakeHandler := getFair(serviceMock{})
+
+	r := mux.NewRouter()
+	r.Handle("/v1/fair", fakeHandler).Methods(http.MethodGet)
+
+	req, err := http.NewRequest("GET", "/v1/fair?neighborhood=Penha", nil)
+	assert.Nil(t, err)
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	var fairs response.Fair
+	err = json.NewDecoder(rr.Body).Decode(&fairs)
+	expected := response.Fair{Total: 1, Fairs: fairsResponse}
+	assert.Nil(t, err)
+	assert.NotNil(t, fairs)
+	assert.Equal(t, http.StatusOK, rr.Code)
+	assert.Equal(t, expected, fairs)
+}
+
+func TestGetFairNotFound(t *testing.T) {
+	errMessage := errors.New("error finding street fair by neighborhood")
+	getFairService = func(neighborhood string) ([]*fair.Fair, error) {
+		return nil, errMessage
+	}
+	fakeHandler := getFair(serviceMock{})
+
+	r := mux.NewRouter()
+	r.Handle("/v1/fair", fakeHandler).Methods(http.MethodGet)
+
+	req, err := http.NewRequest("GET", "/v1/fair?neighborhood=Penha", nil)
+	assert.Nil(t, err)
+
+	rr := httptest.NewRecorder()
+	r.ServeHTTP(rr, req)
+
+	var errResponse response.Error
+	err = json.NewDecoder(rr.Body).Decode(&errResponse)
+
+	expected := response.Error{
+		StatusCode: http.StatusNotFound,
+		Message:    errMessage.Error(),
+	}
+	assert.Nil(t, err)
+	assert.Equal(t, http.StatusNotFound, rr.Code)
+	assert.Equal(t, expected, errResponse)
+}
+
+/**
+* Test coverage DeleteFair
+**/
 func TestDeleteFair(t *testing.T) {
 	removeFairService = func(id int) error {
 		return nil
@@ -133,28 +269,33 @@ func TestDeleteFair(t *testing.T) {
 	rr := httptest.NewRecorder()
 	r.ServeHTTP(rr, req)
 
-	assert.EqualValues(t, http.StatusNoContent, rr.Code)
+	assert.Equal(t, http.StatusNoContent, rr.Code)
 }
 
-func TestGetFair(t *testing.T) {
-	getFairService = func(neighborhood string) ([]*fair.Fair, error) {
-		return []*fair.Fair{{}}, nil
+func TestDeleteFairUnprocessableEntity(t *testing.T) {
+	errMessage := errors.New("strconv.Atoi: parsing \"deleteID\": invalid syntax")
+	removeFairService = func(id int) error {
+		return errMessage
 	}
-	fakeHandler := getFair(serviceMock{})
+	fakeHandler := deleteFair(serviceMock{})
 
 	r := mux.NewRouter()
-	r.Handle("/v1/fair", fakeHandler).Methods(http.MethodGet)
+	r.Handle("/v1/fair/{id}", fakeHandler)
 
-	req, err := http.NewRequest("GET", "/v1/fair?neighborhood=Penha", nil)
+	req, err := http.NewRequest("DELETE", "/v1/fair/deleteID", nil)
 	assert.Nil(t, err)
 
 	rr := httptest.NewRecorder()
 	r.ServeHTTP(rr, req)
 
-	var fairs response.Fair
-	err = json.NewDecoder(rr.Body).Decode(&fairs)
+	var errResponse response.Error
+	err = json.NewDecoder(rr.Body).Decode(&errResponse)
+
+	expected := response.Error{
+		StatusCode: http.StatusUnprocessableEntity,
+		Message:    errMessage.Error(),
+	}
 	assert.Nil(t, err)
-	assert.NotNil(t, fairs)
-	assert.Equal(t, 1, fairs.Total)
-	assert.EqualValues(t, http.StatusOK, rr.Code)
+	assert.Equal(t, http.StatusUnprocessableEntity, rr.Code)
+	assert.Equal(t, expected, errResponse)
 }
