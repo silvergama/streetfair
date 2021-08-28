@@ -15,7 +15,7 @@ func MakeFairHandler(r *mux.Router, service fair.UseCase) {
 	// swagger:route GET /v1/fair v1 fairsGetV1Req
 	// Get street fairs by neighborhood.
 	// Responses:
-	//   200: success
+	//   200: successGet
 	//   404: notFound
 	//   500: internalServerError
 	r.Handle("/v1/fair", getFair(service)).Methods(http.MethodGet).Name("getFairByNeighborhood")

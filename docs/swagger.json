@@ -39,7 +39,7 @@
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/success"
+            "$ref": "#/responses/successGet"
           },
           "404": {
             "$ref": "#/responses/notFound"
@@ -241,6 +241,24 @@
         }
       },
       "x-go-package": "github.com/silvergama/streetfair/common/response"
+    },
+    "responseSuccessGet": {
+      "type": "object",
+      "properties": {
+        "fairs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Fair"
+          },
+          "x-go-name": "Fairs"
+        },
+        "total": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Total"
+        }
+      },
+      "x-go-package": "github.com/silvergama/streetfair/api"
     }
   },
   "responses": {
@@ -278,6 +296,12 @@
       "description": "Success",
       "schema": {
         "$ref": "#/definitions/Success"
+      }
+    },
+    "successGet": {
+      "description": "Success",
+      "schema": {
+        "$ref": "#/definitions/responseSuccessGet"
       }
     }
   }
