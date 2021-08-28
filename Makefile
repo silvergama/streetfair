@@ -50,7 +50,7 @@ clean-coverage:
 coverage: clean-coverage
 	go test -tags="all" -covermode="count" -coverprofile=".cover/cover.out" $(GOPACKAGES)
 
-coverage-html: coverage
+coverage-html: coverage install
 	go tool cover -html=.cover/cover.out
 
 # =========== Docker =============
@@ -66,7 +66,6 @@ docker/test:
 docker/coverage:
 	-docker rm -f coverage
 	docker run --net=host --name=coverage --entrypoint /bin/sh silvergama/streetfair:test -c "make coverage"
-
 
 # =========== App =============
 clean:
