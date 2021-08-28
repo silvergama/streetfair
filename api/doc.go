@@ -56,6 +56,18 @@ type docSuccessResponse struct {
 	Body *response.Success
 }
 
+type responseSuccessGet struct {
+	Total int          `json:"total"`
+	Fairs []*fair.Fair `json:"fairs"`
+}
+
+// Success
+// swagger:response successGet
+type docSuccessGetResponse struct {
+	// in: body
+	Body responseSuccessGet
+}
+
 // swagger:parameters fairsGetV1Req
 type docFairsGetV1Request struct {
 	// in: query
