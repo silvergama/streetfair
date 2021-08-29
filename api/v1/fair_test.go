@@ -9,33 +9,34 @@ import (
 	"testing"
 
 	"github.com/gorilla/mux"
-	"github.com/silvergama/streetfair/common/response"
-	"github.com/silvergama/streetfair/fair"
+
+	"github.com/silvergama/streetfair/entity"
+	"github.com/silvergama/streetfair/pkg/response"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
-	saveFairService   func(f *fair.Fair) (int, error)
-	updateFairService func(f *fair.Fair) (int64, error)
+	saveFairService   func(f *entity.Fair) (int, error)
+	updateFairService func(f *entity.Fair) (int, error)
 	removeFairService func(id int) error
-	getFairService    func(neighborhood string) ([]*fair.Fair, error)
+	getFairService    func(neighborhood string) ([]*entity.Fair, error)
 )
 
 type serviceMock struct{}
 
-func (fs serviceMock) Save(f *fair.Fair) (int, error) {
+func (fs serviceMock) CreateFair(f *entity.Fair) (int, error) {
 	return saveFairService(f)
 }
 
-func (fs serviceMock) Update(f *fair.Fair) (int64, error) {
+func (fs serviceMock) UpdateFair(f *entity.Fair) (int, error) {
 	return updateFairService(f)
 }
 
-func (fs serviceMock) Get(neighborhood string) ([]*fair.Fair, error) {
+func (fs serviceMock) GetFair(neighborhood string) ([]*entity.Fair, error) {
 	return getFairService(neighborhood)
 }
 
-func (fs serviceMock) Remove(id int) error {
+func (fs serviceMock) DeleteFair(id int) error {
 	return removeFairService(id)
 }
 
@@ -43,7 +44,7 @@ func (fs serviceMock) Remove(id int) error {
 * Test coverage AddFair
 **/
 func TestAddFair(t *testing.T) {
-	saveFairService = func(f *fair.Fair) (int, error) {
+	saveFairService = func(f *entity.Fair) (int, error) {
 		return f.ID, nil
 	}
 	fakeHandler := addFair(serviceMock{})
@@ -70,7 +71,7 @@ func TestAddFair(t *testing.T) {
 
 func TestAddFairUnprocessableEntity(t *testing.T) {
 	errMessage := errors.New("json: cannot unmarshal string into Go struct field Fair.id of type int")
-	saveFairService = func(f *fair.Fair) (int, error) {
+	saveFairService = func(f *entity.Fair) (int, error) {
 		return f.ID, errMessage
 	}
 	fakeHandler := addFair(serviceMock{})
@@ -105,8 +106,8 @@ func TestAddFairUnprocessableEntity(t *testing.T) {
 * Test coverage UpdateFair
 **/
 func TestUpdateFairSuccess(t *testing.T) {
-	updateFairService = func(f *fair.Fair) (int64, error) {
-		return int64(f.ID), nil
+	updateFairService = func(f *entity.Fair) (int, error) {
+		return int(f.ID), nil
 	}
 	fakeHandler := updateFair(serviceMock{})
 
@@ -134,7 +135,7 @@ func TestUpdateFairSuccess(t *testing.T) {
 
 func TestUpdateFairServerError(t *testing.T) {
 	errMessage := errors.New("json: cannot unmarshal string into Go struct field Fair.id of type int")
-	updateFairService = func(f *fair.Fair) (int64, error) {
+	updateFairService = func(f *entity.Fair) (int, error) {
 		return 0, errMessage
 	}
 	fakeHandler := updateFair(serviceMock{})
@@ -168,7 +169,7 @@ func TestUpdateFairServerError(t *testing.T) {
 
 func TestUpdateFairUnprocessableEntity(t *testing.T) {
 	errMessage := errors.New("strconv.Atoi: parsing \"penha\": invalid syntax")
-	updateFairService = func(f *fair.Fair) (int64, error) {
+	updateFairService = func(f *entity.Fair) (int, error) {
 		return 0, errMessage
 	}
 	fakeHandler := updateFair(serviceMock{})
@@ -199,8 +200,8 @@ func TestUpdateFairUnprocessableEntity(t *testing.T) {
 * Test coverage GetFair
 **/
 func TestGetFair(t *testing.T) {
-	fairsResponse := []*fair.Fair{{ID: 1}}
-	getFairService = func(neighborhood string) ([]*fair.Fair, error) {
+	fairsResponse := []*entity.Fair{{ID: 1}}
+	getFairService = func(neighborhood string) ([]*entity.Fair, error) {
 		return fairsResponse, nil
 	}
 	fakeHandler := getFair(serviceMock{})
@@ -225,7 +226,7 @@ func TestGetFair(t *testing.T) {
 
 func TestGetFairNotFound(t *testing.T) {
 	errMessage := errors.New("error finding street fair by neighborhood")
-	getFairService = func(neighborhood string) ([]*fair.Fair, error) {
+	getFairService = func(neighborhood string) ([]*entity.Fair, error) {
 		return nil, errMessage
 	}
 	fakeHandler := getFair(serviceMock{})

@@ -10,7 +10,7 @@ import (
 
 var dbInstance *sql.DB
 
-func Setup() error {
+func SetupPostgreSQL() error {
 	if dbInstance != nil {
 		return nil
 	}

@@ -19,8 +19,8 @@
 package api
 
 import (
-	"github.com/silvergama/streetfair/common/response"
-	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/entity"
+	"github.com/silvergama/streetfair/pkg/response"
 )
 
 // Not Found
@@ -57,8 +57,8 @@ type docSuccessResponse struct {
 }
 
 type responseSuccessGet struct {
-	Total int          `json:"total"`
-	Fairs []*fair.Fair `json:"fairs"`
+	Total int            `json:"total"`
+	Fairs []*entity.Fair `json:"fairs"`
 }
 
 // Success
@@ -77,7 +77,7 @@ type docFairsGetV1Request struct {
 // swagger:parameters fairPostV1Req
 type docFairPostV1Request struct {
 	// in: body
-	Body *fair.Fair
+	Body *entity.Fair
 }
 
 // swagger:parameters fairPutV1Req
@@ -85,7 +85,7 @@ type docFairPutV1Request struct {
 	// in: path
 	ID int `json:"id"`
 	// in: body
-	Body *fair.Fair
+	Body *entity.Fair
 }
 
 // swagger:parameters fairDeleteV1Req

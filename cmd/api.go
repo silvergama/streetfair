@@ -20,7 +20,7 @@ func init() {
 }
 
 func apiExecute(cmd *cobra.Command, args []string) error {
-	if err := repository.Setup(); err != nil {
+	if err := repository.SetupPostgreSQL(); err != nil {
 		return err
 	}
 

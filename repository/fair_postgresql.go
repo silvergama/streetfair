@@ -1,29 +1,23 @@
-package fair
+package repository
 
 import (
 	"database/sql"
 
+	"github.com/silvergama/streetfair/entity"
 	"github.com/sirupsen/logrus"
 )
 
-type UseCase interface {
-	Save(f *Fair) (int, error)
-	Update(f *Fair) (int64, error)
-	Remove(id int) error
-	Get(neighborhood string) ([]*Fair, error)
-}
-
-type FairService struct {
+type FairPostgreSQL struct {
 	db *sql.DB
 }
 
-func NewService(db *sql.DB) UseCase {
-	return &FairService{
+func NewFairPostgreSQL(db *sql.DB) *FairPostgreSQL {
+	return &FairPostgreSQL{
 		db,
 	}
 }
 
-func (fs *FairService) Save(f *Fair) (int, error) {
+func (fs *FairPostgreSQL) Create(f *entity.Fair) (int, error) {
 	stmt, err := fs.db.Prepare(`
 	INSERT INTO streetfair (id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
 	`)
@@ -43,7 +37,7 @@ func (fs *FairService) Save(f *Fair) (int, error) {
 	return f.ID, nil
 }
 
-func (fs *FairService) Update(f *Fair) (int64, error) {
+func (fs *FairPostgreSQL) Update(f *entity.Fair) (int64, error) {
 	stmt, err := fs.db.Prepare(`
 	UPDATE streetfair SET 
 		long = $2, 
@@ -80,7 +74,7 @@ func (fs *FairService) Update(f *Fair) (int64, error) {
 	return res.RowsAffected()
 }
 
-func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
+func (fs *FairPostgreSQL) Get(neighborhood string) ([]*entity.Fair, error) {
 	stmt, err := fs.db.Prepare(`
 	SELECT 
 		id, long, lat, setcens, areap, coddist, distrito, codsubpref, subprefe, regiao5, regiao8, nome_feira, registro, logradouro, numero, bairro, referencia 
@@ -92,7 +86,7 @@ func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 
 	defer stmt.Close()
 
-	var fairs []*Fair
+	var fairs []*entity.Fair
 	rows, err := stmt.Query(neighborhood)
 	if err != nil {
 		logrus.Errorf("error getting street fair: %v", err)
@@ -102,7 +96,7 @@ func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 	defer rows.Close()
 
 	for rows.Next() {
-		var f Fair
+		var f entity.Fair
 		err = rows.Scan(&f.ID, &f.Long, &f.Lat, &f.Setcens, &f.Areap, &f.Coddist, &f.Distrito, &f.Codsubpref, &f.Subprefe, &f.Regiao5, &f.Regiao8, &f.NomeFeira, &f.Registro, &f.Logradouro, &f.Numero, &f.Bairro, &f.Referencia)
 		if err != nil {
 			logrus.Errorf("error scanning street fair: %v", err)
@@ -114,7 +108,7 @@ func (fs *FairService) Get(neighborhood string) ([]*Fair, error) {
 	return fairs, nil
 }
 
-func (fs *FairService) Remove(id int) error {
+func (fs *FairPostgreSQL) Delete(id int) error {
 	stmt, err := fs.db.Prepare("DELETE FROM streetfair WHERE id = $1")
 	if err != nil {
 		logrus.Errorf("error preparing to delete street fair query: %v", err)

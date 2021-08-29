@@ -1,13 +1,14 @@
-package fair
+package repository
 
 import (
 	"testing"
 
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/silvergama/streetfair/entity"
 	"github.com/stretchr/testify/assert"
 )
 
-var fair = &Fair{
+var fair = &entity.Fair{
 	ID:         1,
 	Long:       -46550164,
 	Lat:        -23558733,
@@ -38,8 +39,8 @@ func TestSave(t *testing.T) {
 	mock.ExpectPrepare("INSERT INTO streetfair").ExpectExec().WithArgs(1,
 		-46550164, -23558733, 355030885000091, 3550308005040, 87, "VILA FORMOSA", 26, "ARICANDUVA-FORMOSA-CARRAO", "Leste", "Leste 1", "VILA FORMOSA", "4041-0", "RUA MARAGOJIPE", "S/N", "VL FORMOSA", "TV RUA PRETORIA").WillReturnResult(sqlmock.NewResult(1, 1))
 
-	srv := NewService(db)
-	ID, err := srv.Save(fair)
+	srv := NewFairPostgreSQL(db)
+	ID, err := srv.Create(fair)
 	assert.Nil(t, err)
 	assert.Equal(t, 1, ID)
 }
@@ -53,7 +54,7 @@ func TestUpdate(t *testing.T) {
 	mock.ExpectPrepare("UPDATE streetfair").ExpectExec().WithArgs(1,
 		-46550164, -23558733, 355030885000091, 3550308005040, 87, "VILA FORMOSA", 26, "ARICANDUVA-FORMOSA-CARRAO", "Leste", "Leste 1", "VILA FORMOSA", "4041-0", "RUA MARAGOJIPE", "S/N", "VL FORMOSA", "TV RUA PRETORIA").WillReturnResult(sqlmock.NewResult(1, 1))
 
-	srv := NewService(db)
+	srv := NewFairPostgreSQL(db)
 	rowsAffected, err := srv.Update(fair)
 	assert.Nil(t, err)
 	assert.Equal(t, int64(1), rowsAffected)
@@ -69,10 +70,10 @@ func TestGet(t *testing.T) {
 		-46550164, -23558733, 355030885000091, 3550308005040, 87, "VILA FORMOSA", 26, "ARICANDUVA-FORMOSA-CARRAO", "Leste", "Leste 1", "VILA FORMOSA", "4041-0", "RUA MARAGOJIPE", "S/N", "VL FORMOSA", "TV RUA PRETORIA")
 	mock.ExpectPrepare("SELECT (.+) FROM streetfair").ExpectQuery().WithArgs("VL FORMOSA").WillReturnRows(rows)
 
-	srv := NewService(db)
+	srv := NewFairPostgreSQL(db)
 	fairs, err := srv.Get("VL FORMOSA")
 	assert.Nil(t, err)
-	assert.Equal(t, []*Fair{fair}, fairs)
+	assert.Equal(t, []*entity.Fair{fair}, fairs)
 }
 
 func TestDelete(t *testing.T) {
@@ -83,7 +84,7 @@ func TestDelete(t *testing.T) {
 
 	mock.ExpectPrepare("DELETE FROM streetfair").ExpectExec().WithArgs(1).WillReturnResult(sqlmock.NewResult(0, 0))
 
-	srv := NewService(db)
-	err = srv.Remove(1)
+	srv := NewFairPostgreSQL(db)
+	err = srv.Delete(1)
 	assert.Nil(t, err)
 }
