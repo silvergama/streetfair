@@ -7,8 +7,9 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/entity"
 	"github.com/silvergama/streetfair/repository"
+	"github.com/silvergama/streetfair/service/fair"
 	"github.com/sirupsen/logrus"
 )
 
@@ -43,14 +44,16 @@ func (is *importCSV) ImportFromCSV(path string) error {
 		logrus.WithError(err)
 	}
 
-	totalImported := importToDatabase(csvLines, fair.NewService(repository.GetInstance()))
+	repo := repository.NewFairPostgreSQL(repository.GetInstance())
+
+	totalImported := importToDatabase(csvLines, fair.NewService(repo))
 	fmt.Println("Import completed successfully!")
 	fmt.Printf("Total of %d imported lines", totalImported)
 	logrus.Infof("Total of %d imported lines", totalImported)
 	return nil
 }
 
-func importToDatabase(CSVLines [][]string, f fair.UseCase) int {
+func importToDatabase(CSVLines [][]string, service fair.UseCase) int {
 	var count int
 	for i, line := range CSVLines {
 		if i == 0 {
@@ -61,7 +64,7 @@ func importToDatabase(CSVLines [][]string, f fair.UseCase) int {
 			continue
 		}
 		emp := newFair(line)
-		id, err := f.Save(emp)
+		id, err := service.CreateFair(emp)
 		if err != nil {
 			logrus.Warnf("error: %s with ID: %d", err, id)
 			continue
@@ -72,7 +75,7 @@ func importToDatabase(CSVLines [][]string, f fair.UseCase) int {
 	return count
 }
 
-func newFair(line []string) *fair.Fair {
+func newFair(line []string) *entity.Fair {
 	id, _ := strconv.Atoi(line[0])
 	long, _ := strconv.Atoi(line[1])
 	lat, _ := strconv.Atoi(line[2])
@@ -91,7 +94,7 @@ func newFair(line []string) *fair.Fair {
 	bairro := line[15]
 	referencia := line[16]
 
-	return &fair.Fair{
+	return &entity.Fair{
 		ID:         id,
 		Long:       long,
 		Lat:        lat,

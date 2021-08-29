@@ -148,7 +148,7 @@
           "x-go-name": "StatusCode"
         }
       },
-      "x-go-package": "github.com/silvergama/streetfair/common/response"
+      "x-go-package": "github.com/silvergama/streetfair/pkg/response"
     },
     "Fair": {
       "type": "object",
@@ -229,7 +229,7 @@
           "x-go-name": "Subprefe"
         }
       },
-      "x-go-package": "github.com/silvergama/streetfair/fair"
+      "x-go-package": "github.com/silvergama/streetfair/entity"
     },
     "Success": {
       "type": "object",
@@ -240,7 +240,7 @@
           "x-go-name": "ID"
         }
       },
-      "x-go-package": "github.com/silvergama/streetfair/common/response"
+      "x-go-package": "github.com/silvergama/streetfair/pkg/response"
     },
     "responseSuccessGet": {
       "type": "object",

@@ -6,8 +6,9 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	"github.com/silvergama/streetfair/common/response"
-	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/entity"
+	"github.com/silvergama/streetfair/pkg/response"
+	"github.com/silvergama/streetfair/service/fair"
 )
 
 func MakeFairHandler(r *mux.Router, service fair.UseCase) {
@@ -46,7 +47,7 @@ func getFair(service fair.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 		neighborhood := r.URL.Query().Get("neighborhood")
-		fairs, err := service.Get(neighborhood)
+		fairs, err := service.GetFair(neighborhood)
 		if err != nil || len(fairs) == 0 {
 			response.WriteNotFound(w, "error finding street fair by neighborhood")
 			return
@@ -63,13 +64,13 @@ func addFair(service fair.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
-		body := fair.Fair{}
+		body := entity.Fair{}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			response.WriteUnprocessableEntity(w, err.Error())
 			return
 		}
 
-		ID, err := service.Save(&body)
+		ID, err := service.CreateFair(&body)
 		if err != nil {
 			response.WriteServerError(w, "error inserting street fair")
 			return
@@ -84,7 +85,7 @@ func updateFair(service fair.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer r.Body.Close()
 
-		body := fair.Fair{}
+		body := entity.Fair{}
 		if err := json.NewDecoder(r.Body).Decode(&body); err != nil {
 			response.WriteServerError(w, err.Error())
 			return
@@ -97,7 +98,7 @@ func updateFair(service fair.UseCase) http.Handler {
 		}
 		body.ID = ID
 
-		if _, err := service.Update(&body); err != nil {
+		if _, err := service.UpdateFair(&body); err != nil {
 			response.WriteServerError(w, "error updating street fair")
 			return
 		}
@@ -116,7 +117,7 @@ func deleteFair(service fair.UseCase) http.Handler {
 			return
 		}
 
-		if err = service.Remove(ID); err != nil {
+		if err = service.DeleteFair(ID); err != nil {
 			response.WriteServerError(w, "error deleting street fair")
 			return
 		}

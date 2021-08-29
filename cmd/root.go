@@ -3,7 +3,7 @@ package cmd
 import (
 	"os"
 
-	"github.com/silvergama/streetfair/logger"
+	"github.com/silvergama/streetfair/pkg/logger"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/cobra"
 )

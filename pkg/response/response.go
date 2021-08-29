@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/silvergama/streetfair/fair"
+	"github.com/silvergama/streetfair/entity"
 	"github.com/sirupsen/logrus"
 )
 
@@ -18,8 +18,8 @@ type Success struct {
 }
 
 type Fair struct {
-	Total int          `json:"total,omitempty"`
-	Fairs []*fair.Fair `json:"fairs,omitempty"`
+	Total int            `json:"total,omitempty"`
+	Fairs []*entity.Fair `json:"fairs,omitempty"`
 }
 
 func Write(w http.ResponseWriter, body interface{}, status int) {

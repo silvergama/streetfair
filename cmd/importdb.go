@@ -21,7 +21,7 @@ func init() {
 }
 
 func importExecute(cmd *cobra.Command, args []string) error {
-	err := repository.Setup()
+	err := repository.SetupPostgreSQL()
 	if err != nil {
 		return err
 	}

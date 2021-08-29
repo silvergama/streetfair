@@ -1,4 +1,4 @@
-package fair
+package entity
 
 type Fair struct {
 	ID         int    `json:"id,omitempty"`

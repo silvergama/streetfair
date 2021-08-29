@@ -7,8 +7,8 @@ import (
 	"github.com/gorilla/mux"
 	v1 "github.com/silvergama/streetfair/api/v1"
 	"github.com/silvergama/streetfair/app"
-	"github.com/silvergama/streetfair/fair"
 	"github.com/silvergama/streetfair/repository"
+	"github.com/silvergama/streetfair/service/fair"
 	"github.com/sirupsen/logrus"
 )
 
@@ -28,8 +28,8 @@ func Setup() error {
 	r.HandleFunc(RootHandlerPath, RootHandler)
 	r.HandleFunc(HealthCheckHandlerPath, HealthCheckHandler)
 
-	fairRepo := fair.NewService(repository.GetInstance())
-	v1.MakeFairHandler(r, fairRepo)
+	repo := repository.NewFairPostgreSQL(repository.GetInstance())
+	v1.MakeFairHandler(r, fair.NewService(repo))
 
 	srv := &http.Server{
 		Addr:    ":" + port,
