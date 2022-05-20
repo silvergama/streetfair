@@ -27,7 +27,7 @@ jobs:
           version: latest
 
       - name: Execute Go test
-        run: go test -race -coverpkg=./... -coverprofile=coverage-unit.out ./... -json > report.json
+        run: go test -v ./... -cover -coverprofile=coverage.out -covermode=atomic -json > report.json
 
       - name: Go Vet
         run: go vet ./... > govet-report.out

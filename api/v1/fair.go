@@ -11,8 +11,6 @@ import (
 	"github.com/silvergama/streetfair/service/fair"
 )
 
-const v1Fair = "v1/fair"
-
 func MakeFairHandler(r *mux.Router, service fair.UseCase) {
 
 	// swagger:route GET /v1/fair v1 fairsGetV1Req
@@ -21,14 +19,14 @@ func MakeFairHandler(r *mux.Router, service fair.UseCase) {
 	//   200: successGet
 	//   404: notFound
 	//   500: internalServerError
-	r.Handle(v1Fair, getFair(service)).Methods(http.MethodGet).Name("getFairByNeighborhood")
+	r.Handle("/v1/fair", getFair(service)).Methods(http.MethodGet).Name("getFairByNeighborhood")
 
 	// swagger:route POST /v1/fair v1 fairPostV1Req
 	// Add a new street fair.
 	// Responses:
 	//   200: success
 	//   500: internalServerError
-	r.Handle(v1Fair, addFair(service)).Methods(http.MethodPost).Name("addFair")
+	r.Handle("/v1/fair", addFair(service)).Methods(http.MethodPost).Name("addFair")
 
 	// swagger:route PUT /v1/fair/{id} v1 fairPutV1Req
 	// Update street fair.
