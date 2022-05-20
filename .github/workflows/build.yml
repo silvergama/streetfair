@@ -27,10 +27,12 @@ jobs:
           version: latest
 
       - name: Execute Go test
-        run: go test -v ./... -cover -coverprofile=coverage.out -covermode=count -json > report.json
+        run: |
+          go test $(go list ./...) -coverprofile=coverage.out -json > report.json
+          go tool cover -func=coverage.out
 
-      - name: Execute Go Vet
-        run: go vet ./... > govet-report.out
+      - name: Go Vet
+        run: go vet $(go list ./...) > govet-report.out
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
