@@ -36,7 +36,10 @@ func Write(w http.ResponseWriter, body interface{}, status int) {
 
 	w.Header().Add("content-type", "application/json")
 	w.WriteHeader(status)
-	w.Write(bytes)
+	_, err = w.Write(bytes)
+	if err != nil {
+		logrus.WithError(err)
+	}
 }
 
 func WriteServerError(w http.ResponseWriter, message string) {

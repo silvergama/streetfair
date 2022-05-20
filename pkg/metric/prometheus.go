@@ -1,5 +1,11 @@
 package metric
 
+import (
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/push"
+	"github.com/silvergama/streetfair/app"
+)
+
 // Service implements UseCase interface
 type Service struct {
 	pHistogram           *prometheus.HistogramVec
@@ -40,7 +46,7 @@ func NewPrometheusService() (*Service, error) {
 
 // SaveCLI send metrics to server
 func (s *Service) SaveCLI(c *CLI) error {
-	gatwayURL := config.PROMETHEUS_PUSHGATWAY
+	gatwayURL := app.Config.Get("PROMETHEUS_PUSHGATEWAY")
 	s.pHistogram.WithLabelValues(c.Name).Observe(c.Duration)
 	return push.New(gatwayURL, "cmd_job").Collector(s.pHistogram).Push()
 }

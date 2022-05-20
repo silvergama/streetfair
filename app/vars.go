@@ -5,9 +5,10 @@ import (
 )
 
 var Config = envcfg.Load(envcfg.Map{
-	"APPLICATION": "street fairs",
-	"API_PORT":    "9000",
-	"DOCS_PATH":   "./docs",
+	"APPLICATION":            "street fairs",
+	"API_PORT":               "9000",
+	"DOCS_PATH":              "./docs",
+	"PROMETHEUS_PUSHGATEWAY": "localhost:9091",
 
 	"DB_URL": "host=localhost port=5432 user=streetfair password=123456 dbname=streetfair sslmode=disable connect_timeout=2 statement_timeout=2s",
 })
