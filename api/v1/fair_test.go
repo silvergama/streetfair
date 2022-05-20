@@ -50,12 +50,12 @@ func TestAddFair(t *testing.T) {
 	fakeHandler := addFair(serviceMock{})
 
 	r := mux.NewRouter()
-	r.Handle(v1Fair, fakeHandler)
+	r.Handle("/v1/fair", fakeHandler)
 	payload := `{
 		"id": 10
 	}`
 
-	req, err := http.NewRequest("POST", v1Fair, bytes.NewBufferString(payload))
+	req, err := http.NewRequest("POST", "/v1/fair", bytes.NewBufferString(payload))
 	assert.Nil(t, err)
 
 	rr := httptest.NewRecorder()
@@ -77,13 +77,13 @@ func TestAddFairUnprocessableEntity(t *testing.T) {
 	fakeHandler := addFair(serviceMock{})
 
 	r := mux.NewRouter()
-	r.Handle(v1Fair, fakeHandler)
+	r.Handle("/v1/fair", fakeHandler)
 
 	payload := `{
 		"id": "10"
 	}`
 
-	req, err := http.NewRequest("PUT", v1Fair, bytes.NewBufferString(payload))
+	req, err := http.NewRequest("PUT", "/v1/fair", bytes.NewBufferString(payload))
 	assert.Nil(t, err)
 
 	rr := httptest.NewRecorder()
@@ -207,7 +207,7 @@ func TestGetFair(t *testing.T) {
 	fakeHandler := getFair(serviceMock{})
 
 	r := mux.NewRouter()
-	r.Handle(v1Fair, fakeHandler).Methods(http.MethodGet)
+	r.Handle("/v1/fair", fakeHandler).Methods(http.MethodGet)
 
 	req, err := http.NewRequest("GET", "/v1/fair?neighborhood=Penha", nil)
 	assert.Nil(t, err)
@@ -232,7 +232,7 @@ func TestGetFairNotFound(t *testing.T) {
 	fakeHandler := getFair(serviceMock{})
 
 	r := mux.NewRouter()
-	r.Handle(v1Fair, fakeHandler).Methods(http.MethodGet)
+	r.Handle("/v1/fair", fakeHandler).Methods(http.MethodGet)
 
 	req, err := http.NewRequest("GET", "/v1/fair?neighborhood=Penha", nil)
 	assert.Nil(t, err)
