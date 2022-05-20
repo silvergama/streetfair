@@ -20,16 +20,6 @@ jobs:
         with:
           go-version: 1.17
             
-      - name: Retrieve Go cache
-        uses: actions/cache@v2
-        with:
-          path: |
-            ~/go/pkg/mod
-            ~/.cache/go-build
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
-          restore-keys: |
-            ${{ runner.os }}-go-
-
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -37,7 +27,7 @@ jobs:
           version: latest
 
       - name: Execute Go test
-        run: go test -coverpkg=./... -coverprofile=coverage-unit.out ./...
+        run: go test -race -coverpkg=./... -coverprofile=coverage-unit.out ./... -json > report.json
 
       - name: Go Vet
         run: go vet ./... > govet-report.out
