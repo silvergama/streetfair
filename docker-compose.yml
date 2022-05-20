@@ -18,6 +18,34 @@ services:
       interval: 1s
       timeout: 3s
       retries: 30
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
+    container_name: bookmark-grafana
+    network_mode: "bridge"
+    depends_on:
+      - prometheus
+      - prometheus-pushgateway
+  
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./infra/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    container_name: bookmark-prometheus
+    network_mode: "bridge"
+  prometheus-pushgateway:
+    image: prom/pushgateway
+    container_name: bookmark-pushgateway
+    expose:
+      - 9091
+    ports:
+      - "9091:9091"
   
   wait:
     container_name: wait-db
