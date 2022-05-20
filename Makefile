@@ -41,19 +41,17 @@ swagger: check/swagger install
 swagger/api: swagger
 	swagger serve -F=swagger ./docs/swagger.json
 
-# =========== Report =============
+# =========== Coverage =============
 
-clean-report:
-	rm -f report.json cover.out govet-report.out
+clean-coverage:
+	mkdir -p .cover
+	rm -rf .cover/*
 
-coverage: clean-report
-	go test -tags="all" -covermode="count" -coverprofile="cover.out" $(GOPACKAGES) -json > report.json
-
-vet: clean-report
-	go vet ./... > govet-report.out
+coverage: clean-coverage
+	go test -tags="all" -covermode="count" -coverprofile=".cover/cover.out" $(GOPACKAGES)
 
 coverage-html: coverage install
-	go tool cover -html=cover.out
+	go tool cover -html=.cover/cover.out
 
 # =========== Docker =============
 docker/build:
