@@ -1,3 +1,10 @@
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=silvergama_streetfair&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=silvergama_streetfair)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=silvergama_streetfair&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=silvergama_streetfair)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=silvergama_streetfair&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=silvergama_streetfair)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=silvergama_streetfair&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=silvergama_streetfair)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=silvergama_streetfair&metric=coverage)](https://sonarcloud.io/summary/new_code?id=silvergama_streetfair)
+
+
 # Street Fair
 
 ![Street Fair](docs/street-fair.jpeg)
