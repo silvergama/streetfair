@@ -48,7 +48,10 @@ clean-coverage:
 	rm -rf .cover/*
 
 coverage: clean-coverage
-	go test -tags="all" -covermode="count" -coverprofile=".cover/cover.out" $(GOPACKAGES)
+	go test -tags="all" -covermode="count" -coverprofile=".cover/cover.out" $(GOPACKAGES) -json > .cover/report.json
+
+vet:
+	go vet ./... > govet-report.out
 
 coverage-html: coverage install
 	go tool cover -html=.cover/cover.out

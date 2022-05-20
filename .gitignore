@@ -13,8 +13,11 @@
 
 ### VisualStudioCode ###
 .vscode
+
 vendor/
 
 streetfair
 
 fair.log
+
+.cover
