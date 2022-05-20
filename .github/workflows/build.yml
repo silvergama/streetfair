@@ -23,13 +23,16 @@ jobs:
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
+          # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
           version: latest
 
       - name: Execute Go test
-        run: make test
+        run: |
+          go test $(go list ./...) -coverprofile=coverage.out -json > report.json
+          go tool cover -func=coverage.out
 
-      - name: Execute Go Vet
-        run: make vet
+      - name: Go Vet
+        run: go vet $(go list ./...) > govet-report.out
 
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master

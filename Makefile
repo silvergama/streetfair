@@ -47,7 +47,7 @@ clean-report:
 	rm -f report.json cover.out govet-report.out
 
 coverage: clean-report
-	go test -tags="all" -covermode="count" -coverprofile="cover.out" $(GOPACKAGES) -json > report.json
+	go test -tags="all" -covermode="count" -coverprofile="cover.out" $(GOPACKAGES)
 
 vet: clean-report
 	go vet ./... > govet-report.out
