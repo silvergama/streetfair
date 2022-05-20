@@ -10,6 +10,7 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+report.json
 
 ### VisualStudioCode ###
 .vscode
@@ -19,5 +20,3 @@ vendor/
 streetfair
 
 fair.log
-
-.cover
