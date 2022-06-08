@@ -1,0 +1,124 @@
+{"Time":"2022-06-08T15:11:53.455839152Z","Action":"output","Package":"github.com/silvergama/streetfair","Output":"?   \tgithub.com/silvergama/streetfair\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:53.455981953Z","Action":"skip","Package":"github.com/silvergama/streetfair","Elapsed":0}
+{"Time":"2022-06-08T15:11:53.510271104Z","Action":"run","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers"}
+{"Time":"2022-06-08T15:11:53.510334304Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"=== RUN   TestDefaultHandlers\n"}
+{"Time":"2022-06-08T15:11:53.510412904Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"    api_test.go:62: Should return welcome message - GET (RootHandler)\n"}
+{"Time":"2022-06-08T15:11:53.510504905Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"    api_test.go:62: Should return invalid request - PUT (RootHandler)\n"}
+{"Time":"2022-06-08T15:11:53.510574405Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"    api_test.go:62: Should return OK message - GET (HealthCheckHandler)\n"}
+{"Time":"2022-06-08T15:11:53.510704006Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"    api_test.go:62: Should return invalid request - PUT (HealthCheckHandler)\n"}
+{"Time":"2022-06-08T15:11:53.510795806Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Output":"--- PASS: TestDefaultHandlers (0.00s)\n"}
+{"Time":"2022-06-08T15:11:53.510832906Z","Action":"pass","Package":"github.com/silvergama/streetfair/api","Test":"TestDefaultHandlers","Elapsed":0}
+{"Time":"2022-06-08T15:11:53.510862707Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Output":"PASS\n"}
+{"Time":"2022-06-08T15:11:53.510984307Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Output":"coverage: 50.0% of statements\n"}
+{"Time":"2022-06-08T15:11:53.515715329Z","Action":"output","Package":"github.com/silvergama/streetfair/api","Output":"ok  \tgithub.com/silvergama/streetfair/api\t0.010s\tcoverage: 50.0% of statements\n"}
+{"Time":"2022-06-08T15:11:53.515734229Z","Action":"pass","Package":"github.com/silvergama/streetfair/api","Elapsed":0.01}
+{"Time":"2022-06-08T15:11:55.999850264Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFair"}
+{"Time":"2022-06-08T15:11:55.999923764Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFair","Output":"=== RUN   TestAddFair\n"}
+{"Time":"2022-06-08T15:11:55.999985064Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFair","Output":"--- PASS: TestAddFair (0.00s)\n"}
+{"Time":"2022-06-08T15:11:55.999999664Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFair","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000007364Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFairUnprocessableEntity"}
+{"Time":"2022-06-08T15:11:56.000013764Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFairUnprocessableEntity","Output":"=== RUN   TestAddFairUnprocessableEntity\n"}
+{"Time":"2022-06-08T15:11:56.000080764Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFairUnprocessableEntity","Output":"time=\"2022-06-08T15:11:56Z\" level=error msg=\"json: cannot unmarshal string into Go struct field Fair.id of type int\"\n"}
+{"Time":"2022-06-08T15:11:56.000117564Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFairUnprocessableEntity","Output":"--- PASS: TestAddFairUnprocessableEntity (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000128764Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestAddFairUnprocessableEntity","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000134064Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairSuccess"}
+{"Time":"2022-06-08T15:11:56.000149664Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairSuccess","Output":"=== RUN   TestUpdateFairSuccess\n"}
+{"Time":"2022-06-08T15:11:56.000213064Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairSuccess","Output":"--- PASS: TestUpdateFairSuccess (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000224064Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairSuccess","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000229064Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairServerError"}
+{"Time":"2022-06-08T15:11:56.000251864Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairServerError","Output":"=== RUN   TestUpdateFairServerError\n"}
+{"Time":"2022-06-08T15:11:56.000299664Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairServerError","Output":"time=\"2022-06-08T15:11:56Z\" level=error msg=\"json: cannot unmarshal string into Go struct field Fair.id of type int\"\n"}
+{"Time":"2022-06-08T15:11:56.000313364Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairServerError","Output":"--- PASS: TestUpdateFairServerError (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000320864Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairServerError","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000325864Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairUnprocessableEntity"}
+{"Time":"2022-06-08T15:11:56.000330364Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairUnprocessableEntity","Output":"=== RUN   TestUpdateFairUnprocessableEntity\n"}
+{"Time":"2022-06-08T15:11:56.000399764Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairUnprocessableEntity","Output":"time=\"2022-06-08T15:11:56Z\" level=error msg=\"strconv.Atoi: parsing \\\"penha\\\": invalid syntax\"\n"}
+{"Time":"2022-06-08T15:11:56.000412864Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairUnprocessableEntity","Output":"--- PASS: TestUpdateFairUnprocessableEntity (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000420164Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestUpdateFairUnprocessableEntity","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000425264Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFair"}
+{"Time":"2022-06-08T15:11:56.000430064Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFair","Output":"=== RUN   TestGetFair\n"}
+{"Time":"2022-06-08T15:11:56.000508564Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFair","Output":"--- PASS: TestGetFair (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000518564Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFair","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000523764Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFairNotFound"}
+{"Time":"2022-06-08T15:11:56.000528864Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFairNotFound","Output":"=== RUN   TestGetFairNotFound\n"}
+{"Time":"2022-06-08T15:11:56.000572665Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFairNotFound","Output":"time=\"2022-06-08T15:11:56Z\" level=error msg=\"error finding street fair by neighborhood\"\n"}
+{"Time":"2022-06-08T15:11:56.000584965Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFairNotFound","Output":"--- PASS: TestGetFairNotFound (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000592165Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestGetFairNotFound","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000603965Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFair"}
+{"Time":"2022-06-08T15:11:56.000609565Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFair","Output":"=== RUN   TestDeleteFair\n"}
+{"Time":"2022-06-08T15:11:56.000671565Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFair","Output":"--- PASS: TestDeleteFair (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000680765Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFair","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000685865Z","Action":"run","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFairUnprocessableEntity"}
+{"Time":"2022-06-08T15:11:56.000690365Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFairUnprocessableEntity","Output":"=== RUN   TestDeleteFairUnprocessableEntity\n"}
+{"Time":"2022-06-08T15:11:56.000739065Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFairUnprocessableEntity","Output":"time=\"2022-06-08T15:11:56Z\" level=error msg=\"strconv.Atoi: parsing \\\"deleteID\\\": invalid syntax\"\n"}
+{"Time":"2022-06-08T15:11:56.000767565Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFairUnprocessableEntity","Output":"--- PASS: TestDeleteFairUnprocessableEntity (0.00s)\n"}
+{"Time":"2022-06-08T15:11:56.000778665Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Test":"TestDeleteFairUnprocessableEntity","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.000784365Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Output":"PASS\n"}
+{"Time":"2022-06-08T15:11:56.000926365Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Output":"coverage: 78.3% of statements\n"}
+{"Time":"2022-06-08T15:11:56.006394273Z","Action":"output","Package":"github.com/silvergama/streetfair/api/v1","Output":"ok  \tgithub.com/silvergama/streetfair/api/v1\t0.009s\tcoverage: 78.3% of statements\n"}
+{"Time":"2022-06-08T15:11:56.006418573Z","Action":"pass","Package":"github.com/silvergama/streetfair/api/v1","Elapsed":0.01}
+{"Time":"2022-06-08T15:11:56.007295974Z","Action":"output","Package":"github.com/silvergama/streetfair/app","Output":"?   \tgithub.com/silvergama/streetfair/app\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:56.007310874Z","Action":"skip","Package":"github.com/silvergama/streetfair/app","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.007321374Z","Action":"output","Package":"github.com/silvergama/streetfair/cmd","Output":"?   \tgithub.com/silvergama/streetfair/cmd\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:56.007327074Z","Action":"skip","Package":"github.com/silvergama/streetfair/cmd","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.007336774Z","Action":"output","Package":"github.com/silvergama/streetfair/entity","Output":"?   \tgithub.com/silvergama/streetfair/entity\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:56.007342474Z","Action":"skip","Package":"github.com/silvergama/streetfair/entity","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.007349774Z","Action":"output","Package":"github.com/silvergama/streetfair/importdb","Output":"?   \tgithub.com/silvergama/streetfair/importdb\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:56.007354774Z","Action":"skip","Package":"github.com/silvergama/streetfair/importdb","Elapsed":0}
+{"Time":"2022-06-08T15:11:56.007364674Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/logger","Output":"?   \tgithub.com/silvergama/streetfair/pkg/logger\t[no test files]\n"}
+{"Time":"2022-06-08T15:11:56.007370874Z","Action":"skip","Package":"github.com/silvergama/streetfair/pkg/logger","Elapsed":0}
+{"Time":"2022-06-08T15:12:01.086850285Z","Action":"run","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWrite"}
+{"Time":"2022-06-08T15:12:01.086907685Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWrite","Output":"=== RUN   TestWrite\n"}
+{"Time":"2022-06-08T15:12:01.087064685Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWrite","Output":"--- PASS: TestWrite (0.00s)\n"}
+{"Time":"2022-06-08T15:12:01.087148686Z","Action":"pass","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWrite","Elapsed":0}
+{"Time":"2022-06-08T15:12:01.087166386Z","Action":"run","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteServerError"}
+{"Time":"2022-06-08T15:12:01.087172886Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteServerError","Output":"=== RUN   TestWriteServerError\n"}
+{"Time":"2022-06-08T15:12:01.087290286Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteServerError","Output":"time=\"2022-06-08T15:12:01Z\" level=error msg=\"internal server error\"\n"}
+{"Time":"2022-06-08T15:12:01.087351986Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteServerError","Output":"--- PASS: TestWriteServerError (0.00s)\n"}
+{"Time":"2022-06-08T15:12:01.087397386Z","Action":"pass","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteServerError","Elapsed":0}
+{"Time":"2022-06-08T15:12:01.087407286Z","Action":"run","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteNotFound"}
+{"Time":"2022-06-08T15:12:01.087412586Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteNotFound","Output":"=== RUN   TestWriteNotFound\n"}
+{"Time":"2022-06-08T15:12:01.087460586Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteNotFound","Output":"time=\"2022-06-08T15:12:01Z\" level=error msg=\"not found\"\n"}
+{"Time":"2022-06-08T15:12:01.088829288Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteNotFound","Output":"--- PASS: TestWriteNotFound (0.00s)\n"}
+{"Time":"2022-06-08T15:12:01.088901888Z","Action":"pass","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteNotFound","Elapsed":0}
+{"Time":"2022-06-08T15:12:01.088916188Z","Action":"run","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteUnprocessableEntity"}
+{"Time":"2022-06-08T15:12:01.088921588Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteUnprocessableEntity","Output":"=== RUN   TestWriteUnprocessableEntity\n"}
+{"Time":"2022-06-08T15:12:01.089008788Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteUnprocessableEntity","Output":"time=\"2022-06-08T15:12:01Z\" level=error msg=\"unprocessable entity\"\n"}
+{"Time":"2022-06-08T15:12:01.089059788Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteUnprocessableEntity","Output":"--- PASS: TestWriteUnprocessableEntity (0.00s)\n"}
+{"Time":"2022-06-08T15:12:01.089102688Z","Action":"pass","Package":"github.com/silvergama/streetfair/pkg/response","Test":"TestWriteUnprocessableEntity","Elapsed":0}
+{"Time":"2022-06-08T15:12:01.089113588Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Output":"PASS\n"}
+{"Time":"2022-06-08T15:12:01.089250588Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Output":"coverage: 68.4% of statements\n"}
+{"Time":"2022-06-08T15:12:01.091630892Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/response","Output":"ok  \tgithub.com/silvergama/streetfair/pkg/response\t0.009s\tcoverage: 68.4% of statements\n"}
+{"Time":"2022-06-08T15:12:01.091648892Z","Action":"pass","Package":"github.com/silvergama/streetfair/pkg/response","Elapsed":0.01}
+{"Time":"2022-06-08T15:12:02.363828498Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"TestSave"}
+{"Time":"2022-06-08T15:12:02.363904598Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestSave","Output":"=== RUN   TestSave\n"}
+{"Time":"2022-06-08T15:12:02.364431199Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestSave","Output":"--- PASS: TestSave (0.00s)\n"}
+{"Time":"2022-06-08T15:12:02.364508099Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"TestSave","Elapsed":0}
+{"Time":"2022-06-08T15:12:02.364523399Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"TestUpdate"}
+{"Time":"2022-06-08T15:12:02.364529199Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestUpdate","Output":"=== RUN   TestUpdate\n"}
+{"Time":"2022-06-08T15:12:02.364733299Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestUpdate","Output":"--- PASS: TestUpdate (0.00s)\n"}
+{"Time":"2022-06-08T15:12:02.364780499Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"TestUpdate","Elapsed":0}
+{"Time":"2022-06-08T15:12:02.364791399Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"TestGet"}
+{"Time":"2022-06-08T15:12:02.364796799Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestGet","Output":"=== RUN   TestGet\n"}
+{"Time":"2022-06-08T15:12:02.3650148Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestGet","Output":"--- PASS: TestGet (0.00s)\n"}
+{"Time":"2022-06-08T15:12:02.3650596Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"TestGet","Elapsed":0}
+{"Time":"2022-06-08T15:12:02.3650705Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"TestDelete"}
+{"Time":"2022-06-08T15:12:02.3650755Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestDelete","Output":"=== RUN   TestDelete\n"}
+{"Time":"2022-06-08T15:12:02.3651808Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"TestDelete","Output":"--- PASS: TestDelete (0.00s)\n"}
+{"Time":"2022-06-08T15:12:02.3652319Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"TestDelete","Elapsed":0}
+{"Time":"2022-06-08T15:12:02.3652428Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance"}
+{"Time":"2022-06-08T15:12:02.3652478Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance","Output":"=== RUN   Test_setupDBInstance\n"}
+{"Time":"2022-06-08T15:12:02.3653019Z","Action":"run","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance/silver"}
+{"Time":"2022-06-08T15:12:02.3653137Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance/silver","Output":"=== RUN   Test_setupDBInstance/silver\n"}
+{"Time":"2022-06-08T15:12:02.37221901Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance","Output":"--- PASS: Test_setupDBInstance (0.01s)\n"}
+{"Time":"2022-06-08T15:12:02.37224271Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance/silver","Output":"    --- PASS: Test_setupDBInstance/silver (0.01s)\n"}
+{"Time":"2022-06-08T15:12:02.37233291Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance/silver","Elapsed":0.01}
+{"Time":"2022-06-08T15:12:02.37234551Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Test":"Test_setupDBInstance","Elapsed":0.01}
+{"Time":"2022-06-08T15:12:02.37236991Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Output":"PASS\n"}
+{"Time":"2022-06-08T15:12:02.37255121Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Output":"coverage: 56.2% of statements\n"}
+{"Time":"2022-06-08T15:12:02.373435812Z","Action":"output","Package":"github.com/silvergama/streetfair/repository","Output":"ok  \tgithub.com/silvergama/streetfair/repository\t0.014s\tcoverage: 56.2% of statements\n"}
+{"Time":"2022-06-08T15:12:02.373467112Z","Action":"pass","Package":"github.com/silvergama/streetfair/repository","Elapsed":0.014}
+{"Time":"2022-06-08T15:12:02.426157886Z","Action":"output","Package":"github.com/silvergama/streetfair/pkg/metric","Output":"?   \tgithub.com/silvergama/streetfair/pkg/metric\t[no test files]\n"}
+{"Time":"2022-06-08T15:12:02.426191086Z","Action":"skip","Package":"github.com/silvergama/streetfair/pkg/metric","Elapsed":0}
+{"Time":"2022-06-08T15:12:02.426221786Z","Action":"output","Package":"github.com/silvergama/streetfair/service/fair","Output":"?   \tgithub.com/silvergama/streetfair/service/fair\t[no test files]\n"}
+{"Time":"2022-06-08T15:12:02.426229386Z","Action":"skip","Package":"github.com/silvergama/streetfair/service/fair","Elapsed":0}
