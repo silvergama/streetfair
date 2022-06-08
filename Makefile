@@ -25,7 +25,7 @@ deps/down:
 
 # =========== Test =============
 test:
-	go test -failfast -count=1 -v $(GOPACKAGES)
+	go test -failfast -v $(GOPACKAGES)
 
 # =========== Log =============
 show/logs:
@@ -43,17 +43,19 @@ swagger/api: swagger
 
 # =========== Report =============
 
-clean-report:
-	rm -f report.json cover.out govet-report.out
+test/coverage:
+	rm -rf cover
+	mkdir -p cover
+	go test -v $(GOPACKAGES) -cover -coverprofile=cover/coverage.out -json > cover/report.json
+	go tool cover -func=cover/coverage.out
 
-coverage: clean-report
-	go test -tags="all" -covermode="count" -coverprofile="cover.out" $(GOPACKAGES)
+coverage:
+	go test -tags="all" $(GOPACKAGES)
 
-vet: clean-report
-	go vet ./... > govet-report.out
-
-coverage-html: coverage install
-	go tool cover -html=cover.out
+vet:
+	rm -rf govet
+	mkdir -p govet
+	go vet ./... > govet/report.out
 
 # =========== Docker =============
 docker/build:

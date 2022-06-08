@@ -6,8 +6,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
-  sonarcloud:
-    name: SonarCloud
+  lint:
+    name: Run Lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -19,26 +19,87 @@ jobs:
         uses: actions/setup-go@v3
         with:
           go-version: 1.17
-            
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
           # Optional: version of golangci-lint to use in form of v1.2 or v1.2.3 or `latest` to use the latest version
           version: latest
-      
+  vet:
+    name: Run go vet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+      - name: Running go vet
+        run: make vet
+
+      - name: commit go vet
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply go vet changes
+
+  test:
+    name: Tests
+    needs: vet
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+            
       - name: Dependencies up
         run: make deps/up
 
       - name: Execute Go test
         run: |
-          go test $(go list ./...) -coverprofile=coverage.out -json > report.json
-          go tool cover -func=coverage.out
+          make test/coverage
 
-      - name: Go Vet
-        run: go vet $(go list ./...) > govet-report.out
+      - name: commit coverage test
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply coverage changes
 
+  sonarcloud:
+    name: SonarCloud
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Install Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.17
+            
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: "Run if changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: echo "Changes!"
+
+      - name: "Run if no changes have been detected"
+        if: steps.auto-commit-action.outputs.changes_detected == 'false'
+        run: echo "No Changes!"
