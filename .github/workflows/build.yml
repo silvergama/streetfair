@@ -1,10 +1,15 @@
 name: Build
+
 on:
   push:
     branches:
       - main
   pull_request:
     types: [opened, synchronize, reopened]
+
+env:
+  ENVIRONMENT: production
+
 jobs:
   sonarcloud:
     name: SonarCloud
@@ -13,13 +18,24 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0 # Shallow clones should be disabled for a better relevancy of analysis
+
+      - name: Test envs
+        run: echo ${{env.ENVIRONMENT}}
+      
+      - name: Test new enviroment
+        env:
+          ENVIRONMENT: banana
+        run: echo ${{env.ENVIRONMENT}}
+
+      - name: Test get environemnt
+        run: echo ${{env.ENVIRONMENT}}
 
       - name: Install Go
         uses: actions/setup-go@v3
         with:
           go-version: 1.17
-            
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
@@ -37,5 +53,5 @@ jobs:
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
