@@ -11,6 +11,7 @@ import (
 	"github.com/silvergama/streetfair/service/fair"
 )
 
+// MakeFairHandler makes a fair handler v1
 func MakeFairHandler(r *mux.Router, service fair.UseCase) {
 
 	// swagger:route GET /v1/fair v1 fairsGetV1Req
