@@ -20,6 +20,14 @@ jobs:
         with:
           go-version: 1.18
 
+      - name: Import environment variables from a file
+        id: import-env
+        shell: bash
+        run: |
+          while read line; do
+            echo "$line" >> $GITHUB_ENV
+          done < ${{ env.ENV_FILE }}
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v3
         with:
