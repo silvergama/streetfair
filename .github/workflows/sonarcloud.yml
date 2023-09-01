@@ -14,7 +14,7 @@ jobs:
     name: SonarCloud
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code ${{ env.GO_VERSION}}
+      - name: ${{ env.GO_VERSION}}
         uses: actions/checkout@v3
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
