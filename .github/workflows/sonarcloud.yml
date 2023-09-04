@@ -16,9 +16,6 @@ jobs:
     steps:
       - name: Test with ${{ env.GO_VERSION}}
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-
       - name: Install Go
         uses: actions/setup-go@v3
         with:
